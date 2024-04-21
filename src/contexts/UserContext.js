@@ -6,18 +6,22 @@ import AdminAccess from "components/AdminBtnAccess";
 import jwtDecode from "jwt-decode";
 import * as authServices from "services/auth";
 import { any } from "prop-types";
+import { myConfig } from "config";
 
 export const UserCtx = createContext({
   user: null,
+  sessionId: null,
   setUser: () => {},
   logIn: () => {},
   register: () => {},
   logOut: () => {},
+  getSessionId: () => {},
 });
 
 export const UserContext = ({ children }) => {
   const location = useLocation();
   let [pathname, setPathname] = useState(location.pathname);
+  const [sessionId, setSessionId] = useState(null);
 
   const [user, setUser] = useState(null);
   const [modalData, setModalData] = useState({
@@ -30,63 +34,82 @@ export const UserContext = ({ children }) => {
     setModalData({ open: false, title: "", text: "" });
   }
 
-  async function logIn({ email, password }) {
+  // async function logIn({ email, password }) {
+  //   authServices
+  //     .login(email, password)
+  //     .then(async (res) => {
+  //       if (res.status === 200 && res.token) {
+  //         let data = await jwtDecode(res.token);
+  //         return { ...data, token: res.token };
+  //       }
+  //       if (res) {
+  //         throw "Verifique credenciales ingresadas";
+  //       }
+
+  //       throw "Error inesperado, intente mas tarde";
+  //     })
+  //     .then(setUser)
+  //     .catch((err) =>
+  //       setModalData({
+  //         open: true,
+  //         title: "Error en inicio de sesion",
+  //         text: err.message || err,
+  //       })
+  //     );
+  // }
+
+  // async function register({ nombre, apellido, email, password }) {
+  //   authServices
+  //     .register(nombre, apellido, email, password)
+  //     .then(async (res) => {
+  //       if (res.email) {
+  //         return setModalData({
+  //           open: true,
+  //           title: res.message || "Usuario creado",
+  //           text: (
+  //             <>
+  //               <Link to={"/pages/authentication/sign-in"} onClick={handleClose}>
+  //                 Inicie sesion
+  //               </Link>{" "}
+  //               con las credenciales proporcionadas {res.email ? `para ${res.email}` : ""}
+  //             </>
+  //           ),
+  //         });
+  //       }
+
+  //       throw res.message || "Error inesperado, intente mas tarde";
+  //     })
+  //     .catch((err) =>
+  //       setModalData({
+  //         open: true,
+  //         title: "Error en inicio de sesion",
+  //         text: err.message || err,
+  //       })
+  //     );
+  // }
+
+  async function getSessionId() {
+    console.log("calling user context session id");
     authServices
-      .login(email, password)
-      .then(async (res) => {
-        if (res.status === 200 && res.token) {
-          let data = await jwtDecode(res.token);
-          return { ...data, token: res.token };
-        }
-        if (res) {
-          throw "Verifique credenciales ingresadas";
-        }
-
-        throw "Error inesperado, intente mas tarde";
-      })
-      .then(setUser)
-      .catch((err) =>
-        setModalData({
-          open: true,
-          title: "Error en inicio de sesion",
-          text: err.message || err,
-        })
-      );
+    .getSessionId()
+    .then(async (res) => {
+        console.log("set Seession id");
+        console.log("res",res);
+        setSessionId(res.guest_session_id);
+      throw res.message || "Error inesperado, intente mas tarde";
+    })
+    .catch((err) =>
+      setModalData({
+        open: true,
+        title: "Error en inicio de sesion",
+        text: err.message || err,
+       }),
+    )
   }
 
-  async function register({ nombre, apellido, email, password }) {
-    authServices
-      .register(nombre, apellido, email, password)
-      .then(async (res) => {
-        if (res.email) {
-          return setModalData({
-            open: true,
-            title: res.message || "Usuario creado",
-            text: (
-              <>
-                <Link to={"/pages/authentication/sign-in"} onClick={handleClose}>
-                  Inicie sesion
-                </Link>{" "}
-                con las credenciales proporcionadas {res.email ? `para ${res.email}` : ""}
-              </>
-            ),
-          });
-        }
-
-        throw res.message || "Error inesperado, intente mas tarde";
-      })
-      .catch((err) =>
-        setModalData({
-          open: true,
-          title: "Error en inicio de sesion",
-          text: err.message || err,
-        })
-      );
-  }
-
-  async function logOut() {
-    setUser(null);
-  }
+  // async function logOut() {
+  //   setUser(null);
+  // }
 
   useEffect(() => {
     setPathname(location.pathname);
@@ -96,10 +119,12 @@ export const UserContext = ({ children }) => {
     <UserCtx.Provider
       value={{
         user,
-        logIn,
-        logOut,
-        register,
+        sessionId,
+        // logIn,
+        // logOut,
+        // register,
         setUser,
+        getSessionId,
       }}
     >
       {user?.isAdmin && pathname !== "/admin/inbox" && <AdminAccess />}

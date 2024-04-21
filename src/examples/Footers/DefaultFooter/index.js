@@ -1,18 +1,3 @@
-/*
-=========================================================
-* Material Kit 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // react-router-dom components
 import { Link } from "react-router-dom";
 
@@ -29,9 +14,10 @@ import MKTypography from "components/MKTypography";
 
 function DefaultFooter({ content }) {
   const { brand, socials, menus, copyright } = content;
+  const date = new Date().getFullYear();
 
   return (
-    <MKBox component="footer">
+    <MKBox component="footer" bgColor="#1e6091">
       <Container>
         <Grid container spacing={3}>
           <Grid item xs={12} md={3} sx={{ ml: "auto", mb: 3 }}>
@@ -65,7 +51,6 @@ function DefaultFooter({ content }) {
                 display="block"
                 variant="button"
                 fontWeight="bold"
-                textTransform="capitalize"
                 mb={1}
               >
                 {title}
@@ -81,7 +66,6 @@ function DefaultFooter({ content }) {
                         rel="noreferrer"
                         variant="button"
                         fontWeight="regular"
-                        textTransform="capitalize"
                       >
                         {name}
                       </MKTypography>
@@ -91,7 +75,6 @@ function DefaultFooter({ content }) {
                         to={route}
                         variant="button"
                         fontWeight="regular"
-                        textTransform="capitalize"
                       >
                         {name}
                       </MKTypography>
@@ -101,8 +84,8 @@ function DefaultFooter({ content }) {
               </MKBox>
             </Grid>
           ))}
-          <Grid item xs={12} sx={{ textAlign: "center", my: 3 }}>
-            {copyright}
+          <Grid item xs={12} sx={{ textAlign: "center", my: 3, fontSize:"16px" ,color: "#fff"  }}>
+              Todos los derechos reservados. Copyright &copy; {date}
           </Grid>
         </Grid>
       </Container>

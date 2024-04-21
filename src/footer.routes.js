@@ -1,4 +1,4 @@
-import MKTypography from "components/MKTypography";
+import { Typography } from "@mui/material";
 
 const date = new Date().getFullYear();
 
@@ -7,8 +7,8 @@ export default {
   socials: [],
   menus: [],
   copyright: (
-    <MKTypography variant="button" fontWeight="regular">
+    <Typography variant="button" fontWeight="regular" color="#fff" >
       Todos los derechos reservados. Copyright &copy; {date}
-    </MKTypography>
+    </Typography>
   ),
 };

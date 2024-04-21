@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
-import LogoutPage from "pages/LandingPages/Logout";
-import Peliculas from "pages/Peliculas";
+// import LogoutPage from "pages/LandingPages/Logout";
 // Sections
 
 const routes = [
@@ -9,13 +8,6 @@ const routes = [
     route: "/home",
     component: <Navigate to="/" />,
     type: "internal",
-    hideOnRegistered: false,
-  },
-  {
-    name: "Peliculas",
-    route: "/pages/peliculas",
-    type: "internal",
-    component: <Peliculas />,
     hideOnRegistered: false,
   }
 ];
@@ -32,15 +24,15 @@ export function getRoutes(user) {
       dropdown: false,
     };
 
-    let logOut = {
-      name: `Cerrar sesión`,
-      route: "/auth/logout",
-      type: "internal",
-      component: <LogoutPage />,
-      hideOnRegistered: false,
-      collapse: false,
-      dropdown: false,
-    };
+    // let logOut = {
+    //   name: `Cerrar sesión`,
+    //   route: "/auth/logout",
+    //   type: "internal",
+    //   component: <LogoutPage />,
+    //   hideOnRegistered: false,
+    //   collapse: false,
+    //   dropdown: false,
+    // };
 
     if (user.accountVerified && user.isAdmin) {
       welcomeMsg.name = (
@@ -63,7 +55,8 @@ export function getRoutes(user) {
       );
     }
     // si hay usuario, omitiremos algunas opciones como las de registro
-    return [welcomeMsg, logOut, ...routes.filter((r) => !r.hideOnRegistered)];
+    // return [welcomeMsg, logOut, ...routes.filter((r) => !r.hideOnRegistered)];
+    return [welcomeMsg, ...routes.filter((r) => !r.hideOnRegistered)];
   }
   return routes;
 }

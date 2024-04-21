@@ -1,0 +1,6 @@
+documentacion Material Kit: 
+https://www.creative-tim.com/learning-lab/react/box/material-kit/
+
+
+api themovieDB:
+https://developer.themoviedb.org/reference/account-details
