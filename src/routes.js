@@ -1,5 +1,7 @@
+import SignInBasic from "pages/LandingPages/SignIn";
+import SignUpBasic from "pages/LandingPages/SignUp";
 import { Navigate } from "react-router-dom";
-// import LogoutPage from "pages/LandingPages/Logout";
+import Peliculas from "pages/Peliculas";
 // Sections
 
 const routes = [
@@ -9,7 +11,35 @@ const routes = [
     component: <Navigate to="/" />,
     type: "internal",
     hideOnRegistered: false,
-  }
+  }  ,
+  {
+    name: "Estrenos",
+    //route: "/pages/peliculas",
+    type: "internal",
+    //component: <Peliculas />,
+    hideOnRegistered: true,
+  },
+  {
+    name: "Peliculas",
+    route: "/pages/peliculas",
+    type: "internal",
+    component: <Peliculas />,
+    hideOnRegistered: true,
+  },
+  {
+    name: "Registrate",
+    route: "/pages/authentication/sign-up",
+    type: "internal",
+    component: <SignUpBasic />,
+    hideOnRegistered: true,
+  },
+  {
+    name: null,
+    route: "/pages/authentication/sign-in",
+    type: "internal",
+    component: <SignInBasic />,
+    hideOnRegistered: true,
+  },
 ];
 
 export function getRoutes(user) {

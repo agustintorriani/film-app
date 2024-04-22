@@ -20,17 +20,18 @@ import { UserCtx } from "contexts/UserContext";
 
 import logoImage from "assets/images/logo.png";
 import { myConfig } from '../../config.js'
-import styles from "./style.css";
 import { Box, Typography } from "@mui/material";
+import style from "./style.css";
 
-
-function Presentation() {
+function Peliculas() {
   const { user } = useContext(UserCtx);
   const { sessionId } = useContext(UserCtx);
-  
-  const url = myConfig.themoviedb.url + "/movie/popular?language=es-ES&page=1";
+
   const [peliculas, setPeliculas] = useState([]);
   const [generos, setGeneros] = useState([]);
+  const [generoSeleccionado, setGeneroSeleccionado] = useState({});
+
+  const Genero = (id,descripcion) => {return {id: 0, descripcion: ""}};
 
   const options = {
     method: 'GET',
@@ -42,17 +43,51 @@ function Presentation() {
 
   useEffect(() => {
     const fetchData = async () => {
+        let urlGeneros = myConfig.themoviedb.url + "/genre/movie/list?language=es";
       try {
-        const response = await fetch(url, options);
+        const response = await fetch(urlGeneros, options);
         const data = await response.json();
-        setPeliculas(data.results);
-        console.log("pelis",data.results);
+        setGeneros(data.genres);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
+
+
+
+  useEffect(() => {
+            const fetchPorGenero = async () => {
+                let urlPeliculasPorGenero = myConfig.themoviedb.url + "/discover/movie?include_adult=false&include_video=false&language=es-ES&page=1&sort_by=popularity.desc&with_genres=10752";
+              try {
+                const response = await fetch(urlPeliculasPorGenero, options);
+                const data = await response.json();
+                setPeliculas(data.results);
+                console.log("peliss",peliculas);
+              } catch (error) {
+                console.error("Error fetching data:", error);
+              }
+            };
+            fetchPorGenero();
+          }, []);
+
+//   function obtenerPorGenero(genero) {
+//     useEffect(() => {
+//         const fetchPorGenero = async () => {
+//             let urlPeliculasPorGenero = myConfig.themoviedb.url + "/discover/movie?include_adult=false&include_video=false&language=es-ES&page=1&sort_by=popularity.desc&with_genres=12";
+//           try {
+//             const response = await fetch(urlPeliculasPorGenero, options);
+//             const data = await response.json();
+//             setPeliculas(data.results);
+//           } catch (error) {
+//             console.error("Error fetching data:", error);
+//           }
+//         };
+//         fetchPorGenero();
+//       }, []);
+//   }
+
 
   let navbarAction = {
     type: "internal",
@@ -61,12 +96,13 @@ function Presentation() {
     color: "info",
   };
 
-  const detallePelicula = (ctrl) => {
-    console.log("detallePelicula", ctrl);
-  }
+  const handleMostrarPorGenero = (event) => {
+    setGeneroSeleccionado(Genero(
+        event.currentTarget.getAttribute("genre-id"),
+        event.currentTarget.getAttribute("genre-id")
+    ));
 
-  const handleClick = (value) => {
-    console.log("value",value);
+    console.log("generoSeleccionado",generoSeleccionado);
   };
 
   return (
@@ -88,13 +124,40 @@ function Presentation() {
         <Container>
           <Grid container mt={20}>
             <Typography color={"#fff"} fontSize={"30px"}>
-                      Top 20 populares
+                      Géneros
+            </Typography>
+          </Grid>
+          {<Grid container  sx={{
+                justifyContent: "center",
+            }} >
+            {
+            generos.map((genero) => (
+            <Grid item className="genre-tag" onClick = {handleMostrarPorGenero} genre-id={genero.id} key={genero.id}>
+              <Box xs={4}
+                sx={{
+                height: '3vh',
+              }}
+               >
+                <Box>
+                  <MKTypography className="genre-title">
+                    {genero.name}
+                  </MKTypography>
+                </Box>
+              </Box>
+            </Grid>
+            ))}
+
+          </Grid> }
+
+          <Grid container mt={20}>
+            <Typography color={"#fff"} fontSize={"30px"}>
+                      Bélicas
             </Typography>
           </Grid>
           <Grid container >
             {
             peliculas.map((pelicula) => (
-            <Grid item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3} onClick = {handleClick}>
+            <Grid item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3}>
               <Box xs={4}
                 sx={{
                 backgroundImage: `url(${myConfig.themoviedb.pathImage + pelicula.poster_path})`,
@@ -121,15 +184,19 @@ function Presentation() {
               </Box>
             </Grid>
             ))}
-
           </Grid>
         </Container>
       </MKBox>
+
+
       <MKBox>
         <DefaultFooter content={footerRoutes} />
       </MKBox>
     </>
+
+
+
   );
 }
 
-export default Presentation;
+export default Peliculas;
