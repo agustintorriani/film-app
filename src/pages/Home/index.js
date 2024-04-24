@@ -71,8 +71,15 @@ function Home() {
         let countKnownFor = 0;
 
         data.results.forEach((result) => {
-          if (result.known_for) {
-            countKnownFor += result.known_for.length;
+          console.log("result",result);
+          if(result.known_for != undefined){
+            result.known_for.forEach((result) => {
+              if(result.media_type == "movie"){
+                countKnownFor++;
+              }
+            });
+          } else {
+            countKnownFor++;
           }
         });
 
