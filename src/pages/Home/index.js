@@ -212,6 +212,7 @@ function Home() {
                     );
                   } else if (pelicula!= undefined && (pelicula.media_type === "movie" || peliculas.media_type == undefined)) {
                     return (
+                      console.log("pelicula_movie",pelicula),
                       <Grid item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3} onClick={handleClickFilm}>
                         <Box xs={4}
                           sx={{
@@ -223,7 +224,7 @@ function Home() {
                         >
                           <Box className="image-overlay">
                             <MKTypography className="title">
-                              {pelicula.name}
+                              {pelicula.title != undefined ? pelicula.title : pelicula.name}
                             </MKTypography>
           
                             <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
