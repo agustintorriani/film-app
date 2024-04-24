@@ -89,12 +89,9 @@ export const UserContext = ({ children }) => {
   // }
 
   async function getSessionId() {
-    console.log("calling user context session id");
     authServices
     .getSessionId()
     .then(async (res) => {
-        console.log("set Seession id");
-        console.log("res",res);
         setSessionId(res.guest_session_id);
       throw res.message || "Error inesperado, intente mas tarde";
     })

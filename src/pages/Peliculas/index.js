@@ -22,6 +22,7 @@ import logoImage from "assets/images/logo.png";
 import { myConfig } from '../../config.js'
 import { Box, Typography } from "@mui/material";
 import style from "./style.css";
+import { useNavigate } from "react-router-dom";
 
 function Peliculas() {
   const { user } = useContext(UserCtx);
@@ -30,6 +31,7 @@ function Peliculas() {
   const [peliculas, setPeliculas] = useState([]);
   const [generos, setGeneros] = useState([]);
   const [generoSeleccionado, setGeneroSeleccionado] = useState({});
+  let navigate = useNavigate();
 
   const Genero = (id,descripcion) => {return {id: 0, descripcion: ""}};
 
@@ -64,7 +66,6 @@ function Peliculas() {
                 const response = await fetch(urlPeliculasPorGenero, options);
                 const data = await response.json();
                 setPeliculas(data.results);
-                console.log("peliss",peliculas);
               } catch (error) {
                 console.error("Error fetching data:", error);
               }
@@ -101,9 +102,13 @@ function Peliculas() {
         event.currentTarget.getAttribute("genre-id"),
         event.currentTarget.getAttribute("genre-id")
     ));
-
-    console.log("generoSeleccionado",generoSeleccionado);
   };
+
+  const handleClickFilm = (event) => {
+    let url = "/pages/peliculasDetalle?id=" + event.currentTarget.getAttribute("film-id");
+    navigate(url, { replace: true });
+  };
+
 
   return (
     <>
@@ -132,7 +137,7 @@ function Peliculas() {
             }} >
             {
             generos.map((genero) => (
-            <Grid item className="genre-tag" onClick = {handleMostrarPorGenero} genre-id={genero.id} key={genero.id}>
+            <Grid item className="genre-tag" onClick={handleMostrarPorGenero} genre-id={genero.id} key={genero.id}>
               <Box xs={4}
                 sx={{
                 height: '3vh',
@@ -149,7 +154,7 @@ function Peliculas() {
 
           </Grid> }
 
-          <Grid container mt={20}>
+          <Grid container mt={4}>
             <Typography color={"#fff"} fontSize={"30px"}>
                       Bélicas
             </Typography>
@@ -157,13 +162,13 @@ function Peliculas() {
           <Grid container >
             {
             peliculas.map((pelicula) => (
-            <Grid item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3}>
+            <Grid item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3} onClick={handleClickFilm}>
               <Box xs={4}
                 sx={{
                 backgroundImage: `url(${myConfig.themoviedb.pathImage + pelicula.poster_path})`,
                 backgroundSize: 'cover',
                 width: '100%',
-                height: '45vh',
+                height: '60vh',
               }}
                >
 
@@ -173,9 +178,15 @@ function Peliculas() {
                   </MKTypography>
 
                   <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
-                    <MKTypography className="overview">
-                      {pelicula.overview}
-                    </MKTypography>
+                    {pelicula.overview.length > 0 ? (
+                      <MKTypography className="overview">
+                        {pelicula.overview}
+                      </MKTypography>
+                    ) : (
+                      <MKTypography className="overview">
+                        Sin descripción
+                      </MKTypography>
+                    )}
                   </Box>
 
                  

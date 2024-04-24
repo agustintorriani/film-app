@@ -10,7 +10,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 // Material Kit 2 React themes
 import theme from "assets/theme";
-import Presentation from "layouts/pages/presentation";
+import Home from "layouts/pages/home";
 
 // Material Kit 2 React routes
 import * as definedRoutes from "routes";
@@ -34,7 +34,6 @@ export default function App() {
     authServices
       .getSessionId()
       .then((res) => {
-        console.log("res", res);
       })
       .catch((err) => {
         console.log("err", err);
@@ -66,9 +65,9 @@ export default function App() {
         <CssBaseline />
         <Routes>
           {/* <Route path="/auth/logout" element={<LogoutPage />} /> */}
-          <Route path="/presentation" element={<Presentation />} />
+          <Route path="/home" element={<Home />} />
           {getRoutes(definedRoutes.getRoutes(user))}
-          <Route path="*" element={<Navigate to="/presentation" />} />
+          <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
       </UserContext>
     </ThemeProvider>

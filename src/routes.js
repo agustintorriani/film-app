@@ -2,7 +2,8 @@ import SignInBasic from "pages/LandingPages/SignIn";
 import SignUpBasic from "pages/LandingPages/SignUp";
 import { Navigate } from "react-router-dom";
 import Peliculas from "pages/Peliculas";
-// Sections
+import Estrenos from "pages/Estrenos";
+import PeliculasDetalle from "pages/PeliculasDetalle";
 
 const routes = [
   {
@@ -11,13 +12,15 @@ const routes = [
     component: <Navigate to="/" />,
     type: "internal",
     hideOnRegistered: false,
+    hideOnNavBar: false
   }  ,
   {
     name: "Estrenos",
-    //route: "/pages/peliculas",
+    route: "/pages/estrenos",
     type: "internal",
-    //component: <Peliculas />,
+    component: <Estrenos />,
     hideOnRegistered: true,
+    hideOnNavBar: false
   },
   {
     name: "Peliculas",
@@ -25,6 +28,7 @@ const routes = [
     type: "internal",
     component: <Peliculas />,
     hideOnRegistered: true,
+    hideOnNavBar: false
   },
   {
     name: "Registrate",
@@ -32,13 +36,23 @@ const routes = [
     type: "internal",
     component: <SignUpBasic />,
     hideOnRegistered: true,
+    hideOnNavBar: false
   },
   {
-    name: null,
+    name: 'PeliculasDetalle',
+    route: "/pages/peliculasDetalle",
+    type: "internal",
+    component: <PeliculasDetalle />,
+    hideOnRegistered: true,
+    hideOnNavBar: true
+  },
+  {
+    name: "SignIn",
     route: "/pages/authentication/sign-in",
     type: "internal",
     component: <SignInBasic />,
     hideOnRegistered: true,
+    hideOnNavBar: true
   },
 ];
 
@@ -86,9 +100,9 @@ export function getRoutes(user) {
     }
     // si hay usuario, omitiremos algunas opciones como las de registro
     // return [welcomeMsg, logOut, ...routes.filter((r) => !r.hideOnRegistered)];
-    return [welcomeMsg, ...routes.filter((r) => !r.hideOnRegistered)];
+    return [welcomeMsg, ...routes.filter((r) => !r.hideOnRegistered && !r.hideOnNavBar)];
   }
-  return routes;
+   return routes;
 }
 
 export default routes;

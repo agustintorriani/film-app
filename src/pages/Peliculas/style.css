@@ -1,6 +1,6 @@
 .genre-tag{
     margin-right: 10px!important;
-    margin-bottom: 10px!important;
+    margin-bottom: 2%!important;
     transition: transform .2s; /* Animation */;
     -webkit-user-select:none;-moz-user-select:-moz-none;
     -ms-user-select:none;user-select:none;
@@ -23,4 +23,8 @@
 
 .genre-title:hover{
     color: #eaeaea;
+}
+
+.company{
+    margin-right: 10px;
 }

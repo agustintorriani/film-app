@@ -20,17 +20,15 @@ import { UserCtx } from "contexts/UserContext";
 
 import logoImage from "assets/images/logo.png";
 import { myConfig } from '../../config.js'
-import styles from "./style.css";
 import { Box, Typography } from "@mui/material";
+import style from "./style.css";
+import { useNavigate } from 'react-router-dom';
 
 
-function Presentation() {
+function Estrenos() {
   const { user } = useContext(UserCtx);
-  const { sessionId } = useContext(UserCtx);
-  
-  const url = myConfig.themoviedb.url + "/movie/popular?language=es-ES&page=1";
   const [peliculas, setPeliculas] = useState([]);
-  const [generos, setGeneros] = useState([]);
+  let navigate = useNavigate();
 
   const options = {
     method: 'GET',
@@ -42,16 +40,16 @@ function Presentation() {
 
   useEffect(() => {
     const fetchData = async () => {
+        let urlGeneros = myConfig.themoviedb.url + "/movie/now_playing?language=es";
       try {
-        const response = await fetch(url, options);
+        const response = await fetch(urlGeneros, options);
         const data = await response.json();
         setPeliculas(data.results);
-        console.log("pelis",data.results);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-    fetchData();
+     fetchData();
   }, []);
 
   let navbarAction = {
@@ -61,19 +59,15 @@ function Presentation() {
     color: "info",
   };
 
-  const detallePelicula = (ctrl) => {
-    console.log("detallePelicula", ctrl);
-  }
-
-  const handleClick = (value) => {
-    console.log("value",value);
+  
+  const handleClickFilm = (event) => {
+    let url = "/pages/peliculasDetalle?id=" + event.currentTarget.getAttribute("film-id");
+    navigate(url, { replace: true });
   };
 
   return (
     <>
       <DefaultNavbar routes={getRoutes(user)} action={navbarAction} sticky />
-      
-
       <MKBox
         minHeight="250vh"
         width="100%"
@@ -86,21 +80,23 @@ function Presentation() {
         }}
       >
         <Container>
-          <Grid container mt={20}>
+          <Grid container mt={10}>
             <Typography color={"#fff"} fontSize={"30px"}>
-                      Top 20 populares
+              Estrenos
             </Typography>
           </Grid>
           <Grid container >
             {
             peliculas.map((pelicula) => (
-            <Grid item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3} onClick = {handleClick}>
+            <Grid sx={{height: '60vh'}} item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3} onClick={handleClickFilm}>
               <Box xs={4}
                 sx={{
                 backgroundImage: `url(${myConfig.themoviedb.pathImage + pelicula.poster_path})`,
                 backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
                 width: '100%',
-                height: '45vh',
+                height: '100%',
               }}
                >
 
@@ -110,26 +106,35 @@ function Presentation() {
                   </MKTypography>
 
                   <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
-                    <MKTypography className="overview">
-                      {pelicula.overview}
-                    </MKTypography>
+                    {pelicula.overview.length > 0 ? (
+                      <MKTypography className="overview">
+                        {pelicula.overview}
+                      </MKTypography>
+                    ) : (
+                      <MKTypography className="overview">
+                        Sin descripción
+                      </MKTypography>
+                    )}
                   </Box>
-
                  
                 </Box>
 
               </Box>
             </Grid>
             ))}
-
           </Grid>
         </Container>
       </MKBox>
+
+
       <MKBox>
         <DefaultFooter content={footerRoutes} />
       </MKBox>
     </>
+
+
+
   );
 }
 
-export default Presentation;
+export default Estrenos;

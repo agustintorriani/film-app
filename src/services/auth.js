@@ -72,7 +72,6 @@ async function validateToken(token) {
 }
 
 async function getSessionId() {
-  console.log("haciendo getsessionID");
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   
@@ -87,7 +86,6 @@ async function getSessionId() {
   try {
     let res = await fetch("https://api.themoviedb.org/3/authentication/guest_session/new", requestOptions);
     let res1 = await res.json();
-    console.log("res1", res1);
     window.sessionStorage.setItem("sessionId", res1.guest_session_id);
 
     return res1;

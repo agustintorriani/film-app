@@ -15,10 +15,6 @@ import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 
-// Material Kit 2 React example components
-//import DefaultNavbar from "examples/Navbars/DefaultNavbar";
-// import SimpleFooter from "examples/Footers/SimpleFooter";
-
 // Material Kit 2 React page layout routes
 //import routes from "routes";
 import CustomModal from "components/CustomModal/CustomModal";
@@ -34,6 +30,7 @@ function SignInBasic() {
     email: "",
     password: "",
   });
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalData, setModalData] = useState({
     open: false,
@@ -150,7 +147,7 @@ function SignInBasic() {
                       // onClick={handleSubmit}
                       // disabled={isSubmitting}
                       component={Link}
-                      to="/pages/presentation"
+                      to="/pages/home"
                       fullWidth
                     >
                       Iniciar Sesión
