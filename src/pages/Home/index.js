@@ -178,9 +178,9 @@ function Home() {
                   
                   if (pelicula!= undefined && pelicula.media_type == "person") {
                     return (
-                      pelicula.known_for.map((knownForItem) => (
-                        console.log("knownForItem", knownForItem),
-                        <Grid item className="one" film-id={pelicula.id} key={knownForItem.id} xs={12} lg={3} onClick={handleClickFilm}>
+                      console.log("know",pelicula.known_for),
+                      pelicula.known_for.filter( item => item.media_type == "movie").map((knownForItem) => (
+                        <Grid item className="one" film-id={knownForItem.id} key={knownForItem.id} xs={12} lg={3} onClick={handleClickFilm}>
                             <Box xs={4}
                               sx={{
                               backgroundImage: knownForItem.poster_path ? `url(${myConfig.themoviedb.pathImage + knownForItem.poster_path})` : `url(${posterImg})`,
