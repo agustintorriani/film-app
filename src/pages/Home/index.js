@@ -154,7 +154,7 @@ function Home() {
                 fullWidth
                 id="searcher"
                 className="search-input"
-                label="Buscar por película o actor..."
+                label="Buscar por título, actor o director..."
                 variant="outlined"
                 onKeyDown={handleSearch}
               />
