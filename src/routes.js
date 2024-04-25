@@ -1,34 +1,33 @@
 import SignInBasic from "pages/LandingPages/SignIn";
 import SignUpBasic from "pages/LandingPages/SignUp";
 import { Navigate } from "react-router-dom";
-import Peliculas from "pages/Peliculas";
 import Estrenos from "pages/Estrenos";
 import PeliculasDetalle from "pages/PeliculasDetalle";
+import Generos from "pages/Generos";
 
 const routes = [
   {
     name: "Home",
     route: "/home",
-    component: <Navigate to="/" />,
     type: "internal",
     hideOnRegistered: false,
-    hideOnNavBar: false
-  }  ,
+    hide: true
+  },
+  {
+    name: "Géneros",
+    route: "/pages/generos",
+    type: "internal",
+    component: <Generos />,
+    hideOnRegistered: true,
+    hide: false
+  },
   {
     name: "Estrenos",
     route: "/pages/estrenos",
     type: "internal",
     component: <Estrenos />,
     hideOnRegistered: true,
-    hideOnNavBar: false
-  },
-  {
-    name: "Peliculas",
-    route: "/pages/peliculas",
-    type: "internal",
-    component: <Peliculas />,
-    hideOnRegistered: true,
-    hideOnNavBar: false
+    hide: false
   },
   {
     name: "Registrate",
@@ -36,7 +35,7 @@ const routes = [
     type: "internal",
     component: <SignUpBasic />,
     hideOnRegistered: true,
-    hideOnNavBar: false
+    hide: false
   },
   {
     name: 'PeliculasDetalle',
@@ -44,7 +43,7 @@ const routes = [
     type: "internal",
     component: <PeliculasDetalle />,
     hideOnRegistered: true,
-    hideOnNavBar: true
+    hide: true
   },
   {
     name: "SignIn",
@@ -52,7 +51,7 @@ const routes = [
     type: "internal",
     component: <SignInBasic />,
     hideOnRegistered: true,
-    hideOnNavBar: true
+    hide: true
   },
 ];
 
@@ -99,8 +98,8 @@ export function getRoutes(user) {
       );
     }
     // si hay usuario, omitiremos algunas opciones como las de registro
-    // return [welcomeMsg, logOut, ...routes.filter((r) => !r.hideOnRegistered)];
-    return [welcomeMsg, ...routes.filter((r) => !r.hideOnRegistered && !r.hideOnNavBar)];
+    //return [welcomeMsg, logOut, ...routes.filter((r) => !r.hideOnRegistered)];
+    return [welcomeMsg, ...routes.filter((r) => !r.hideOnRegistered)];
   }
    return routes;
 }

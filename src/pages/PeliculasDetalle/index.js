@@ -70,7 +70,6 @@ function PeliculasDetalle() {
           const response = await fetch(UrlComments, options);
           const data = await response.json();
           setComentarios(data.results);
-          console.log("comments",comentarios);
         } catch (error) {
           console.error("Error fetching data:", error);
         }

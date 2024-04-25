@@ -65,7 +65,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
     return () => window.removeEventListener("resize", displayMobileNavbar);
   }, []);
 
-  const renderNavbarItems = routes.map(({ name, icon, href, route, collapse }) => (
+  const renderNavbarItems = routes.filter( item => item.hide == false).map(({ name, icon, href, route, collapse }) => (
     <DefaultNavbarDropdown
       key={name}
       name={name}
@@ -86,7 +86,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
   ));
 
   // Render the routes on the dropdown menu
-  const renderRoutes = routes.map(({ name, collapse, columns, rowsPerColumn }) => {
+  const renderRoutes = routes.filter( item => item.hide == false).map(({ name, collapse, columns, rowsPerColumn }) => {
     let template;
 
     // Render the dropdown menu that should be display as columns
@@ -454,8 +454,8 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
       >
         <MKBox display="flex" justifyContent="space-between" alignItems="center">
           <MKBox
-            component={Link}
-            to="/"
+            component="a"
+            href="/pages/home"
             lineHeight={1}
             py={transparent ? 1.5 : 0.75}
             pl={relative || transparent ? 0 : { xs: 0, lg: 1 }}

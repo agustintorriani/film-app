@@ -18,6 +18,8 @@ import { UserContext } from "contexts/UserContext";
 import { UserCtx } from "contexts/UserContext";
 // import LogoutPage from "pages/LandingPages/Logout";
 import * as authServices from "./services/auth";
+import { Login } from "@mui/icons-material";
+import SignInBasic from "pages/LandingPages/SignIn";
 
 export default function App() {
   const { user } = useContext(UserCtx);
@@ -65,9 +67,10 @@ export default function App() {
         <CssBaseline />
         <Routes>
           {/* <Route path="/auth/logout" element={<LogoutPage />} /> */}
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<SignInBasic />} />
+          <Route path="/pages/home" element={<Home />} />
           {getRoutes(definedRoutes.getRoutes(user))}
-          <Route path="*" element={<Navigate to="/home" />} />
+          {/* <Route path="*" element={<Navigate to="/home" />} /> */}
         </Routes>
       </UserContext>
     </ThemeProvider>

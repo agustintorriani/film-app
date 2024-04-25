@@ -45,12 +45,9 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("fetching loading...",url);
         const response = await fetch(url, options);
         const data = await response.json();
-        console.log("resultados de populares",data);
         setPeliculasAMostrar(data.results);
-        console.log("peliculasAMostrar", peliculasAMostrar);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -63,7 +60,6 @@ function Home() {
     const fetchBuscador = async () => {
       try {
         let urlBuscador = myConfig.themoviedb.url + "search/multi?query="+ searchValue +"&include_adult=false&language=es-ES&page=1";
-        console.log("fetching busqueda...",urlBuscador);
         const response = await fetch(urlBuscador, options);
         const data = await response.json();
 
@@ -71,7 +67,6 @@ function Home() {
         let countKnownFor = 0;
 
         data.results.forEach((result) => {
-          console.log("result",result);
           if(result.known_for != undefined){
             result.known_for.forEach((result) => {
               if(result.media_type == "movie"){
@@ -159,7 +154,7 @@ function Home() {
                 fullWidth
                 id="searcher"
                 className="search-input"
-                label="Buscar por película, genero o actor..."
+                label="Buscar por película o actor..."
                 variant="outlined"
                 onKeyDown={handleSearch}
               />
@@ -185,7 +180,6 @@ function Home() {
                   
                   if (pelicula!= undefined && pelicula.media_type == "person") {
                     return (
-                      console.log("know",pelicula.known_for),
                       pelicula.known_for.filter( item => item.media_type == "movie").map((knownForItem) => (
                         <Grid item className="one" film-id={knownForItem.id} key={knownForItem.id} xs={12} lg={3} onClick={handleClickFilm}>
                             <Box xs={4}
@@ -219,7 +213,6 @@ function Home() {
                     );
                   } else if (pelicula!= undefined && (pelicula.media_type === "movie" || peliculas.media_type == undefined)) {
                     return (
-                      console.log("pelicula_movie",pelicula),
                       <Grid item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3} onClick={handleClickFilm}>
                         <Box xs={4}
                           sx={{

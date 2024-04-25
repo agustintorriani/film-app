@@ -31,6 +31,7 @@ function SignUpBasic() {
     nombre: "",
     apellido: "",
     email: "",
+    usuario: "",
     password: "",
     repeatPassword: "",
   });
@@ -117,19 +118,9 @@ function SignUpBasic() {
                 <MKBox component="form" role="form" onSubmit={handleSubmit}>
                   <MKBox mb={2}>
                     <MKInput
-                      label="Nombre"
-                      name="nombre"
-                      value={registrationData.nombre}
-                      onChange={onChangeHandler}
-                      disabled={isSubmitting}
-                      fullWidth
-                    />
-                  </MKBox>
-                  <MKBox mb={2}>
-                    <MKInput
-                      label="Apellido"
-                      name="apellido"
-                      value={registrationData.apellido}
+                      label="Usuario"
+                      name="usuario"
+                      value={registrationData.usuario}
                       onChange={onChangeHandler}
                       disabled={isSubmitting}
                       fullWidth
