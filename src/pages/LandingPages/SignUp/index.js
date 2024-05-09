@@ -117,6 +117,26 @@ function SignUpBasic() {
               <MKBox pt={4} pb={3} px={3}>
                 <MKBox component="form" role="form" onSubmit={handleSubmit}>
                   <MKBox mb={2}>
+                      <MKInput
+                        label="Nombre"
+                        name="nombre"
+                        value={registrationData.nombre}
+                        onChange={onChangeHandler}
+                        disabled={isSubmitting}
+                        fullWidth
+                      />
+                    </MKBox>
+                  <MKBox mb={2}>
+                      <MKInput
+                        label="Apellido"
+                        name="apellido"
+                        value={registrationData.apellido}
+                        onChange={onChangeHandler}
+                        disabled={isSubmitting}
+                        fullWidth
+                      />
+                    </MKBox>
+                  <MKBox mb={2}>
                     <MKInput
                       label="Usuario"
                       name="usuario"
@@ -143,7 +163,7 @@ function SignUpBasic() {
                       value={registrationData.password}
                       onChange={onChangeHandler}
                       disabled={isSubmitting}
-                      label="Password"
+                      label="Contraseña"
                       name="password"
                       fullWidth
                     />
@@ -154,7 +174,7 @@ function SignUpBasic() {
                       value={registrationData.repeatPassword}
                       onChange={onChangeHandler}
                       disabled={isSubmitting}
-                      label="Repetir Password"
+                      label="Repetir Contraseña"
                       name="repeatPassword"
                       fullWidth
                     />
@@ -172,7 +192,7 @@ function SignUpBasic() {
                   </MKBox>
                   <MKBox mt={1} mb={1} textAlign="center">
                     <MKTypography variant="button" color="text">
-                      ¿Ya estas registrado?{" "}
+                      ¿Ya estás registrado?{" "}
                       <MKTypography
                         component={Link}
                         to="/pages/authentication/sign-in"
@@ -182,21 +202,8 @@ function SignUpBasic() {
                         disabled={isSubmitting}
                         textGradient
                       >
-                        Ingresá
+                        ¡Ingresá!
                       </MKTypography>
-                    </MKTypography>
-                  </MKBox>
-                  <MKBox mt={3} mb={1} textAlign="center">
-                    <MKTypography
-                      component={Link}
-                      to="/"
-                      variant="button"
-                      color="info"
-                      fontWeight="medium"
-                      textGradient
-                      disabled={isSubmitting}
-                    >
-                      Volver a home
                     </MKTypography>
                   </MKBox>
                 </MKBox>

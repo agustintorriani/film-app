@@ -39,7 +39,7 @@ function PeliculasDetalle() {
     let navbarAction = {
       type: "internal",
       route: "/pages/authentication/sign-in",
-      label: "Ingresá",
+      label: "Cerrar Sesión",
       color: "info",
     };
 

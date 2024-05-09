@@ -20,7 +20,7 @@ import MKButton from "components/MKButton";
 import CustomModal from "components/CustomModal/CustomModal";
 
 // Images
- import bgImage from "assets/images/bg-login.jpg";
+import bgImage from "assets/images/bg-login.jpg";
 import { UserCtx } from "contexts/UserContext";
 
 function SignInBasic() {
@@ -108,7 +108,7 @@ function SignInBasic() {
                 textAlign="center"
               >
                 <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  Inicia sesión
+                  Iniciar Sesión
                 </MKTypography>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
@@ -165,23 +165,11 @@ function SignInBasic() {
                         disabled={isSubmitting}
                         textGradient
                       >
-                        Registrate
+                        ¡Registrate!
                       </MKTypography>
                     </MKTypography>
                   </MKBox>
-                  <MKBox mt={3} mb={1} textAlign="center">
-                    <MKTypography
-                      component={Link}
-                      to="/"
-                      variant="button"
-                      color="info"
-                      fontWeight="medium"
-                      textGradient
-                      disabled={isSubmitting}
-                    >
-                      Ir a home
-                    </MKTypography>
-                  </MKBox>
+
                 </form>
               </MKBox>
             </Card>

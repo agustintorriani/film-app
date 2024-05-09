@@ -17,7 +17,19 @@ const routes = [
     name: "Géneros",
     route: "/pages/generos",
     type: "internal",
-    component: <Generos />,
+    component: (
+      <div
+        style={{backgroundColor: 'white'}} // Default background color
+        onMouseEnter={(e) => { // Change background color on hover
+          e.currentTarget.style.backgroundColor = '##000000'; // Light grey color
+        }}
+        onMouseLeave={(e) => { // Restore default background color on mouse leave
+          e.currentTarget.style.backgroundColor = 'white';
+        }}
+      >
+        <Generos />
+      </div>
+    ),
     hideOnRegistered: true,
     hide: false
   },
@@ -30,12 +42,20 @@ const routes = [
     hide: false
   },
   {
+    name: "Favoritos",
+    route: "/pages/favoritos",
+    type: "internal",
+    component: <Estrenos />,
+    hideOnRegistered: true,
+    hide: false
+  },
+  {
     name: "Registrate",
     route: "/pages/authentication/sign-up",
     type: "internal",
     component: <SignUpBasic />,
     hideOnRegistered: true,
-    hide: false
+    hide: true
   },
   {
     name: 'PeliculasDetalle',
