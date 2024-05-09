@@ -1,24 +1,3 @@
-/**
-=========================================================
-* Material Kit 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-kit-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-/**
- * The base colors for the Material Kit 2 React.
- * You can add new color using this file.
- * You can customized the colors for the entire Material Kit 2 React using thie file.
- */
-
 export default {
   background: {
     default: "#f0f2f5",
@@ -27,6 +6,14 @@ export default {
   text: {
     main: "#7b809a",
     focus: "#7b809a",
+  },
+
+  lbl: {
+    main: "#a9c399",
+  },
+  brand: {
+    main: "#708f5d",
+    state: "#a9c399",
   },
 
   transparent: {
@@ -57,6 +44,11 @@ export default {
   info: {
     main: "#1A73E8",
     focus: "#1662C4",
+  },
+
+  colorBase: {
+    main: "#BFD8AF",
+    state: "#a9c399",
   },
 
   success: {
@@ -102,6 +94,18 @@ export default {
       state: "#D81B60",
     },
 
+    colorBase: {
+      main: "#BFD8AF",
+      state: "#a9c399",
+    },
+    brand: {
+      main: "#708f5d",
+      state: "#a9c399",
+    },
+    lbl: {
+      main: "#a9c399",
+    },
+    
     secondary: {
       main: "#747b8a",
       state: "#495361",
@@ -148,7 +152,17 @@ export default {
       main: "#55acee",
       dark: "#3ea1ec",
     },
-
+    brand: {
+      main: "#708f5d",
+      state: "#a9c399",
+    },
+    colorBase: {
+      main: "#BFD8AF",
+      state: "#a9c399",
+    },
+    lbl: {
+      main: "#99BC85",
+    },
     instagram: {
       main: "#125688",
       dark: "#0e456d",
@@ -206,6 +220,17 @@ export default {
       text: "#cc084b",
     },
 
+    lbl: {
+      main: "#99BC85",
+    },
+    colorBase: {
+      main: "#BFD8AF",
+      state: "#a9c399",
+    },
+    brand: {
+      main: "#708f5d",
+      state: "#a9c399",
+    },
     secondary: {
       background: "#d7d9e1",
       text: "#6c757d",
@@ -251,6 +276,9 @@ export default {
     error: "#f44336",
     light: "#adb5bd",
     dark: "#404040",
+    colorBase: "#BFD8AF",
+    lbl: "#99BC85",
+    brand: "#708f5d",
   },
 
   inputBorderColor: "#d2d6da",

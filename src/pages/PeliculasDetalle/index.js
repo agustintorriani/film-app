@@ -20,12 +20,16 @@ import { UserCtx } from "contexts/UserContext";
 
 import logoImage from "assets/images/logo.png";
 import { myConfig } from '../../config.js'
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useLocation } from 'react-router-dom';
 import { CircularProgress } from "@mui/material";
 import ReactCountryFlag from "react-country-flag";
 import { Rating } from 'react-simple-star-rating'
 import styles from './style.css';
+import logo from '../../assets/images/userDefault.png';
+import { Favorite } from "@mui/icons-material";
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import toast, { Toaster } from 'react-hot-toast';
 
 function PeliculasDetalle() {
     const { user } = useContext(UserCtx);
@@ -40,7 +44,7 @@ function PeliculasDetalle() {
       type: "internal",
       route: "/pages/authentication/sign-in",
       label: "Cerrar Sesión",
-      color: "info",
+      color: "colorBase",
     };
 
     const options = {
@@ -50,7 +54,30 @@ function PeliculasDetalle() {
         Authorization: 'Bearer ' + myConfig.themoviedb.token, 
       }
     };
-  
+
+      const handleAddToFavorites = () => {
+        let btn = document.getElementById("btnAddFav");
+        if(btn.classList.contains("favorito")) {
+            document.getElementById("btnAddFav").classList.remove("favorito");
+            toast.success("Se ha removido de favoritos")
+          } else {
+            document.getElementById("btnAddFav").classList.add("favorito");
+            toast.success("Se ha agregado a favoritos")
+        }
+      }
+
+      const handleAddToWatchlist = () => {
+        let btn = document.getElementById("btnAddPending");
+        if(btn.classList.contains("pendiente")) {
+            document.getElementById("btnAddPending").classList.remove("pendiente");
+            toast.success("Se ha removido de pendientes")
+          } else {
+            document.getElementById("btnAddPending").classList.add("pendiente");
+            toast.success("Se ha agregado a pendientes")
+        }
+      }
+
+
     useEffect(() => {
       const fetchDataPelicula = async () => {
         try {
@@ -82,11 +109,12 @@ function PeliculasDetalle() {
   
   return (
     <>
+    <div><Toaster position="bottom-center"/></div>
       <DefaultNavbar routes={getRoutes(user)} action={navbarAction} sticky />
       <MKBox
         width="100%"
         sx={{
-          backgroundColor: "#1e6091",
+          backgroundColor: "#E1F0DA",
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
@@ -105,10 +133,19 @@ function PeliculasDetalle() {
                                         style={{ width: "auto", height: "70vh" }}
                                     />
                                 </Box>
+                                <Box mt={2} display="flex"  justifyContent="center">
+                                  <Button id="btnAddFav" sx={{marginRight:"10px"}} variant="contained" color="colorBase" onClick={handleAddToFavorites}>
+                                    <Favorite /> Agregar a Favoritos
+                                  </Button>
+                                  <Button id="btnAddPending" variant="contained" color="colorBase" onClick={handleAddToWatchlist}>
+                                    <BookmarkIcon />
+                                    Agregar a Pendientes
+                                  </Button>
+                                </Box>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <Box color={"#fff"}>
-                                    <Typography variant="h2" color={"#fff"} gutterBottom>
+                                <Box color={"#708f5d"}>
+                                    <Typography variant="h2" color={"#708f5d"} gutterBottom>
                                         {pelicula.title}
                                     </Typography>
                                     <Typography variant="subtitle1" gutterBottom>
@@ -116,7 +153,7 @@ function PeliculasDetalle() {
                                     </Typography>
                                     <Typography variant="body1" gutterBottom>
                                         Lenguaje Original: {pelicula.language}
-                                        <ReactCountryFlag countryCode="US" svg />
+                                        <ReactCountryFlag countryCode={pelicula.origin_country[0]} svg />
                                     </Typography>
                                     <Typography variant="body1" gutterBottom>
                                         Géneros: 
@@ -148,7 +185,7 @@ function PeliculasDetalle() {
                                 </Box>
                             </Grid>
                             <Grid mt={10} item>
-                                <Typography sx={{color: "#fff"}}  gutterBottom>
+                                <Typography sx={{color: "#708f5d"}}  gutterBottom>
                                         Comentarios:
                                 </Typography>
                                 {comentarios.length > 0 ? (
@@ -162,17 +199,24 @@ function PeliculasDetalle() {
                                         marginBottom: "10px",
                                       }}
                                     >
-                                      <Typography sx={{color: "#fff;"}} gutterBottom>
-                                        <img className="author-photo" src={myConfig.themoviedb.pathImage + comentario.author_details.avatar_path} alt={comentario.author_name} />
+                                      <Typography sx={{color: "#708f5d;"}} gutterBottom>
+                                        {comentario.author_details.avatar_path ? (
+                                          <img className="author-photo" src={myConfig.themoviedb.pathImage + comentario.author_details.avatar_path} alt={comentario.author_name} />
+                                        ) : (
+                                          <img
+                                            className="author-photo"
+                                            src={logo}
+                                          />
+                                        )}
                                         <b>{comentario.author}</b>
                                       </Typography>
-                                      <Typography className="comentario" gutterBottom>
+                                      <Typography className="comentario" sx={{color: "#708f5d;"}} gutterBottom>
                                         {comentario.content}
                                       </Typography>
                                     </Box>
                                   ))
                                 ) : (
-                                  <Typography sx={{color: "#fff;"}} gutterBottom>
+                                  <Typography sx={{color: "#708f5d;"}} gutterBottom>
                                     No hay comentarios disponibles.
                                   </Typography>
                                 )}

@@ -2,7 +2,7 @@ import { Link, Navigate } from "react-router-dom";
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
+import { useNavigate } from "react-router-dom";
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
 import MKInput from "components/MKInput";
@@ -18,8 +18,10 @@ import MKTypography from "components/MKTypography";
 import { useContext, useState } from "react";
 import { UserCtx } from "contexts/UserContext";
 import CustomModal from "components/CustomModal/CustomModal";
+import toast, { Toaster } from 'react-hot-toast';
 
 function SignUpBasic() {
+  const navigate = useNavigate();
   const { user, register } = useContext(UserCtx);
   const [modalData, setModalData] = useState({
     open: false,
@@ -50,31 +52,55 @@ function SignUpBasic() {
     setRegistrationData((rd) => ({ ...rd, [target.name]: target.value }));
   }
 
-  async function handleSubmit() {
-    if (registrationData.password !== registrationData.repeatPassword) {
-      return setModalData({
-        open: true,
-        title: "Error al intentar registrase",
-        text: "Las contraseñas ingresadas no coinciden",
-      });
-    }
+  // async function handleSubmit() {
+  //   if (registrationData.password !== registrationData.repeatPassword) {
+  //     return setModalData({
+  //       open: true,
+  //       title: "Error al intentar registrase",
+  //       text: "Las contraseñas ingresadas no coinciden",
+  //     });
+  //   }
 
-    try {
-      await Promise.resolve()
-        .then(() => setIsSubmitting(true))
-        .then(() => register(registrationData));
-    } catch (err) {
-      setModalData({
-        open: true,
-        title: "Error en registro",
-        text: err.message || err,
-      });
+  //   try {
+  //     await Promise.resolve()
+  //       .then(() => setIsSubmitting(true))
+  //       .then(() => register(registrationData));
+  //   } catch (err) {
+  //     setModalData({
+  //       open: true,
+  //       title: "Error en registro",
+  //       text: err.message || err,
+  //     });
+  //   }
+  //   setIsSubmitting(false);
+  // }
+
+  async function handleSubmit(e) {
+    if (registrationData.password != registrationData.repeatPassword) {
+      toast.error("Las contraseñas no coinciden");
+      e.preventDefault();
+    } else if (registrationData.email == "" || registrationData.password == "" || registrationData.repeatPassword == "" || registrationData.usuario == "") {
+      toast('Faltan campos obligatorios');
+    } else {
+        setIsSubmitting(true);
+        toast.promise(
+          new Promise((resolve) => setTimeout(resolve, 2000)),
+          {
+            loading: 'Registrando...',
+            success: 'Registro exitoso',
+            error: 'Error en el registro',
+          }
+        ).then(() => {
+          setTimeout(() => {
+            navigate("/pages/home");
+          }, 2000);
+        });
     }
-    setIsSubmitting(false);
   }
 
   return (
     <>
+      <div><Toaster position="bottom-center"/></div>
       {user && <Navigate to="/" />}
       <CustomModal open={modalData.open} modalData={modalData} handleClose={handleModalClose} />
       <MKBox
@@ -101,9 +127,9 @@ function SignUpBasic() {
             <Card>
               <MKBox
                 variant="gradient"
-                bgColor="info"
+                bgColor="colorBase"
                 borderRadius="lg"
-                coloredShadow="info"
+                coloredShadow="colorBase"
                 mx={2}
                 mt={-3}
                 p={2}
@@ -117,27 +143,7 @@ function SignUpBasic() {
               <MKBox pt={4} pb={3} px={3}>
                 <MKBox component="form" role="form" onSubmit={handleSubmit}>
                   <MKBox mb={2}>
-                      <MKInput
-                        label="Nombre"
-                        name="nombre"
-                        value={registrationData.nombre}
-                        onChange={onChangeHandler}
-                        disabled={isSubmitting}
-                        fullWidth
-                      />
-                    </MKBox>
-                  <MKBox mb={2}>
-                      <MKInput
-                        label="Apellido"
-                        name="apellido"
-                        value={registrationData.apellido}
-                        onChange={onChangeHandler}
-                        disabled={isSubmitting}
-                        fullWidth
-                      />
-                    </MKBox>
-                  <MKBox mb={2}>
-                    <MKInput
+                    <MKInput required
                       label="Usuario"
                       name="usuario"
                       value={registrationData.usuario}
@@ -147,7 +153,7 @@ function SignUpBasic() {
                     />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput
+                    <MKInput required
                       type="email"
                       value={registrationData.email}
                       onChange={onChangeHandler}
@@ -158,7 +164,7 @@ function SignUpBasic() {
                     />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput
+                    <MKInput required
                       type="password"
                       value={registrationData.password}
                       onChange={onChangeHandler}
@@ -169,7 +175,7 @@ function SignUpBasic() {
                     />
                   </MKBox>
                   <MKBox mb={2}>
-                    <MKInput
+                    <MKInput required
                       type="password"
                       value={registrationData.repeatPassword}
                       onChange={onChangeHandler}
@@ -181,8 +187,10 @@ function SignUpBasic() {
                   </MKBox>
                   <MKBox mt={4} mb={1}>
                     <MKButton
+                      type="submit"
                       variant="gradient"
-                      color="info"
+                      color="colorBase"
+                      coloredShadow="colorBase"
                       fullWidth
                       onClick={handleSubmit}
                       disabled={isSubmitting}
@@ -197,7 +205,7 @@ function SignUpBasic() {
                         component={Link}
                         to="/pages/authentication/sign-in"
                         variant="button"
-                        color="info"
+                        color="colorBase"
                         fontWeight="medium"
                         disabled={isSubmitting}
                         textGradient

@@ -89,7 +89,7 @@ function Generos() {
     type: "internal",
     route: "/pages/authentication/sign-in",
     label: "Cerrar Sesión",
-    color: "info",
+    color: "colorBase",
   };
 
   const handleClickFilm = (event) => {
@@ -105,17 +105,17 @@ function Generos() {
         minHeight="250vh"
         width="100%"
         sx={{
-          backgroundColor: "#1e6091",
+          backgroundColor: "#E1F0DA",
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
           placeItems: "top",
         }}
       >
-        <Container>
+        <Container sx={{paddingTop:"3em"}}>
           {generos.filter((item) => item.id != 10770).map((genero) => (
-            <Box key={genero.id} mt={15}>
-              <Typography variant="h4" sx={{ marginTop: 4, marginBottom: 2, color:"#fff" }}>
+            <Box key={genero.id}>
+              <Typography variant="h4" sx={{ marginTop: 4, marginBottom: 2, color:"#83a96b" }}>
                 {/* {genero.name} ({genero.id}) Resultados: { peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length} */}
                 {genero.name} ({ peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length})
               </Typography>
@@ -139,11 +139,11 @@ function Generos() {
 
                           <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
                               {pelicula.overview.length > 0 ? (
-                                <MKTypography className="overview">
+                                <MKTypography  sx={{color:"#fff"}} className="overview">
                                   {pelicula.overview}
                                 </MKTypography>
                                 ) : (
-                                <MKTypography className="overview">
+                                <MKTypography sx={{color:"#fff"}} className="overview">
                                   Sin descripción
                                 </MKTypography>
                                 )}

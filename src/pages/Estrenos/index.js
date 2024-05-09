@@ -56,7 +56,7 @@ function Estrenos() {
     type: "internal",
     route: "/pages/authentication/sign-in",
     label: "Cerrar Sesión",
-    color: "info",
+    color: "colorBase",
   };
 
   
@@ -72,7 +72,7 @@ function Estrenos() {
         minHeight="250vh"
         width="100%"
         sx={{
-          backgroundColor: "#1e6091",
+          backgroundColor: "#E1F0DA",
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
@@ -81,7 +81,7 @@ function Estrenos() {
       >
         <Container>
           <Grid container mt={10}>
-            <Typography color={"#fff"} fontSize={"30px"}>
+            <Typography color={"#83a96b"} fontSize={"30px"}>
               Estrenos
             </Typography>
           </Grid>
@@ -107,11 +107,11 @@ function Estrenos() {
 
                   <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
                     {pelicula.overview.length > 0 ? (
-                      <MKTypography className="overview">
+                      <MKTypography  sx={{color:"#fff"}}  className="overview">
                         {pelicula.overview}
                       </MKTypography>
                     ) : (
-                      <MKTypography className="overview">
+                      <MKTypography sx={{color:"#fff"}}  className="overview">
                         Sin descripción
                       </MKTypography>
                     )}

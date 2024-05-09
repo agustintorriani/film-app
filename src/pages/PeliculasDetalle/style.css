@@ -1,6 +1,6 @@
 .genero-title{
     color: #fff;
-    background-color: #52b69a;
+    background-color: #779167;
     color: "#fff";
     font-size: 18px;
     border-radius: 10px 100px / 120px;
@@ -29,4 +29,21 @@
     border-radius: 50%;
     background-size: cover;
     background-position: center;
+}
+
+
+#btnAddPending:hover {
+    color: green;
+}
+
+#btnAddFav:hover {
+    color: red;
+}
+
+.pendiente {
+    color: green!important;
+}
+
+.favorito {
+    color: red!important;
 }

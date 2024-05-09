@@ -460,10 +460,12 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             py={transparent ? 1.5 : 0.75}
             pl={relative || transparent ? 0 : { xs: 0, lg: 1 }}
           >
-            <MKTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
+            {/* <MKTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}> */}
+            <MKTypography variant="button" color={"brand"} fontWeight="bold">
               {brand}
             </MKTypography>
           </MKBox>
+
           <MKBox
             color="inherit"
             display={{ xs: "none", lg: "flex" }}
@@ -483,7 +485,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
                       ? "contained"
                       : "gradient"
                   }
-                  color={action.color ? action.color : "info"}
+                  color={action.color ? action.color : "colorBase"}
                   size="small"
                 >
                   {action.label}
@@ -559,6 +561,7 @@ DefaultNavbar.propTypes = {
         "primary",
         "secondary",
         "info",
+        "colorBase",
         "success",
         "warning",
         "error",

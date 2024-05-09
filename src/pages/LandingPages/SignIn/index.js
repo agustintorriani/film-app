@@ -98,9 +98,9 @@ function SignInBasic() {
             <Card aria-disabled={isSubmitting}>
               <MKBox
                 variant="gradient"
-                bgColor="info"
+                bgColor="colorBase"
                 borderRadius="lg"
-                coloredShadow="info"
+                coloredShadow="colorBase"
                 mx={2}
                 mt={-3}
                 p={2}
@@ -142,7 +142,7 @@ function SignInBasic() {
                   <MKBox mt={4} mb={1}>
                     <MKButton
                       variant="contained"
-                      color="info"
+                      color="colorBase"
                       type="submit"
                       // onClick={handleSubmit}
                       // disabled={isSubmitting}
@@ -160,7 +160,7 @@ function SignInBasic() {
                         component={Link}
                         to="/pages/authentication/sign-up"
                         variant="button"
-                        color="info"
+                        color="colorBase"
                         fontWeight="medium"
                         disabled={isSubmitting}
                         textGradient

@@ -20,7 +20,7 @@
 }  
 
 .image-overlay .overview { 
-    color: white; 
+    color: 99BC85; 
     text-align: center; 
     justify-items: center;
     justify-content: center;
@@ -34,18 +34,19 @@
 }
 
 .search-input{
-  color: #fff;
+  color: #99BC85;
 }
 
+
 #searcher,#searcher-label{
-  color: #fff!important;
+  color: #99BC85!important;
 }
 
 ::placeholder {
-  color: #fff;
+  color: #99BC85;
   opacity: 1; /* Firefox */
 }
 
 ::-ms-input-placeholder { /* Edge 12 -18 */
-  color: #fff;
+  color: #99BC85;
 }

@@ -130,7 +130,7 @@ function Home() {
     type: "internal",
     route: "/pages/authentication/sign-in",
     label: "Cerrar Sesión",
-    color: "info",
+    color: "colorBase",
   };
 
   return (
@@ -140,7 +140,7 @@ function Home() {
         minHeight="250vh"
         width="100%"
         sx={{
-          backgroundColor: "#1e6091",
+          backgroundColor: "#E1F0DA",
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
@@ -149,8 +149,12 @@ function Home() {
       >
         <Container>
           <Grid container mt={12} >
-            <Grid item xs={12} lg={12} height={"45px"}>
+            <Grid item xs={12} lg={12} height={"45px"} mb={5}>
               <TextField
+                sx={{
+                  "& fieldset": { border: '1px solid #99BC85' },
+                  "& fieldset:hover": { border: '1px solid red!important' },
+                }}
                 fullWidth
                 id="searcher"
                 className="search-input"
@@ -160,7 +164,7 @@ function Home() {
               />
             </Grid>
             <Grid item xs={12} lg={12}>
-              <Typography color={"#fff"} fontSize={"30px"}>
+              <Typography color={"#83a96b"} fontSize={"30px"}>
                   {title}
               </Typography>
             </Grid>
@@ -197,11 +201,11 @@ function Home() {
 
                                 <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
                                   {knownForItem.overview?.length > 0 ? (
-                                    <MKTypography className="overview">
+                                    <MKTypography sx={{color:"#fff"}} className="overview">
                                       {knownForItem.overview}
                                     </MKTypography>
                                   ) : (
-                                    <MKTypography className="overview">
+                                    <MKTypography sx={{color:"#fff"}} className="overview">
                                       Sin descripción
                                     </MKTypography>
                                   )}
@@ -229,11 +233,11 @@ function Home() {
           
                             <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
                               {pelicula.overview?.length > 0 ? (
-                                <MKTypography className="overview">
+                                <MKTypography  sx={{color:"#fff"}}  className="overview">
                                   {pelicula.overview}
                                 </MKTypography>
                               ) : (
-                                <MKTypography className="overview">
+                                <MKTypography sx={{color:"#fff"}}  className="overview">
                                   Sin descripción
                                 </MKTypography>
                               )}
