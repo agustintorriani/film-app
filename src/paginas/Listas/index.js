@@ -33,7 +33,7 @@ function Listas() {
   const { sessionId } = useContext(UserCtx);
 
   const [peliculas, setPeliculas] = useState(dataPelis.results);
-  const [generos, setGeneros] = useState([{id: 99999, name:"Favoritos"},{id: 99998, name:"Pendientes"}]);
+  const [generos, setGeneros] = useState([{id: 99997, name:"Vistos recientemente"},{id: 99999, name:"Favoritos"},{id: 99998, name:"Pendientes"}]);
   const [generosString, setGenerosString] = useState("");
   let navigate = useNavigate();
   const [ isLoading, setIsLoading ] = useState(true);
@@ -48,7 +48,8 @@ function Listas() {
 
   useEffect(() => {
     const fetchData = async () => {
-        let urlGeneros = myConfig.themoviedb.url + "/genre/movie/list?language=es";
+      let urlGeneros = myConfig.themoviedb.url + "/genre/movie/list?language=es";
+      
       try {
         let genStr = "";
         generos.forEach(element => {
@@ -127,7 +128,7 @@ function Listas() {
                     <CircularProgress />
                 </Box>
             </Grid>
-          ) : ( generos.filter((item) => item.id == 99999 || item.id == 99998).map((genero) => (
+          ) : ( generos.filter((item) => item.id == 99999 || item.id == 99998 || item.id == 99997).map((genero) => (
             <Box key={genero.id}>
               <Typography variant="h4" sx={{ marginTop: 4, marginBottom: 2, color:"#83a96b" }}>
                 {/* {genero.name} ({genero.id}) Resultados: { peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length} */}
