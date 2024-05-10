@@ -25,9 +25,10 @@ import style from "./style.css";
 import { useNavigate } from "react-router-dom";
 import HorizontalScroll from "react-scroll-horizontal"
 import dataPelis from '../../assets/dataPelis.json';
+import { string } from "prop-types";
 
 
-function Generos() {
+function Listas() {
   const { user } = useContext(UserCtx);
   const { sessionId } = useContext(UserCtx);
 
@@ -97,6 +98,8 @@ function Generos() {
     navigate(url, { replace: true });
   };
 
+  let nom = "";
+
   return (
     <>
       <DefaultNavbar routes={getRoutes(user)} action={navbarAction} sticky />
@@ -113,7 +116,7 @@ function Generos() {
         }}
       >
         <Container sx={{paddingTop:"3em"}}>
-          {generos.filter((item) => item.id != 10770).map((genero) => (
+          {generos.filter((item) => item.id == 878 || item.id == 28).map((genero) => (
             <Box key={genero.id}>
               <Typography variant="h4" sx={{ marginTop: 4, marginBottom: 2, color:"#83a96b" }}>
                 {/* {genero.name} ({genero.id}) Resultados: { peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length} */}
@@ -131,7 +134,6 @@ function Generos() {
                           height: '100%',
                           }}
                         >
-
                         <Box className="image-overlay">
                           <MKTypography className="title">
                             {pelicula.title}
@@ -167,4 +169,4 @@ function Generos() {
   );
 }
 
-export default Generos;
+export default Listas;

@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import Estrenos from "pages/Estrenos";
 import PeliculasDetalle from "pages/PeliculasDetalle";
 import Generos from "pages/Generos";
-import Favoritos from "pages/Favoritos";
+import Listas from "pages/Listas";
 
 const routes = [
   {
@@ -43,16 +43,16 @@ const routes = [
     hide: false
   },
   {
-    name: "Favoritos",
-    route: "/pages/favoritos",
+    name: "Mis Listas",
+    route: "/pages/listas",
     type: "internal",
-    component: <Favoritos />,
+    component: <Listas />,
     hideOnRegistered: true,
     hide: false
   },
   {
     name: "Registrate",
-    route: "/pages/authentication/sign-up",
+    route: "/pages/authentication/registro",
     type: "internal",
     component: <SignUpBasic />,
     hideOnRegistered: true,
@@ -68,7 +68,7 @@ const routes = [
   },
   {
     name: "SignIn",
-    route: "/pages/authentication/sign-in",
+    route: "/pages/authentication/iniciar-sesion",
     type: "internal",
     component: <SignInBasic />,
     hideOnRegistered: true,

@@ -158,7 +158,7 @@ function SignInBasic() {
                       ¿Primera vez en FilmApp?{" "}
                       <MKTypography
                         component={Link}
-                        to="/pages/authentication/sign-up"
+                        to="/pages/authentication/registro"
                         variant="button"
                         color="colorBase"
                         fontWeight="medium"

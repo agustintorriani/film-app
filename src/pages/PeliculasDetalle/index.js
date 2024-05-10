@@ -42,7 +42,7 @@ function PeliculasDetalle() {
 
     let navbarAction = {
       type: "internal",
-      route: "/pages/authentication/sign-in",
+      route: "/pages/authentication/iniciar-sesion",
       label: "Cerrar Sesión",
       color: "colorBase",
     };
