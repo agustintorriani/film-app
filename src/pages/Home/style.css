@@ -39,14 +39,14 @@
 
 
 #searcher,#searcher-label{
-  color: #99BC85!important;
+  color: #fff!important;
 }
 
 ::placeholder {
-  color: #99BC85;
+  color: #fff;
   opacity: 1; /* Firefox */
 }
 
 ::-ms-input-placeholder { /* Edge 12 -18 */
-  color: #99BC85;
+  color: #fff;
 }

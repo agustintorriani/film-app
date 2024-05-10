@@ -148,28 +148,36 @@ function Home() {
         }}
       >
         <Container>
-          <Grid container mt={12} >
-            <Grid item xs={12} lg={12} height={"45px"} mb={5}>
-              <TextField
-                sx={{
-                  "& fieldset": { border: '1px solid #99BC85' },
-                  "& fieldset:hover": { border: '1px solid red!important' },
-                }}
-                fullWidth
-                id="searcher"
-                className="search-input"
-                label="Buscar por título, actor o director..."
-                variant="outlined"
-                onKeyDown={handleSearch}
-              />
-            </Grid>
-            <Grid item xs={12} lg={12}>
-              <Typography color={"#83a96b"} fontSize={"30px"}>
-                  {title}
-              </Typography>
-            </Grid>
-            
+        <Grid container mt={12}>
+          <Grid item xs={12} lg={12} height={"45px"} mb={5}>
+            <TextField
+              fullWidth
+              id="searcher"
+              className="search-input"
+              label="Buscar por título, actor o director..."
+              variant="outlined"
+              onKeyDown={handleSearch}
+              InputProps={{
+                sx: {
+                  backgroundColor: "rgba(0, 128, 0, 0.25)", // Transparent darker green background
+                  color: "#fff", // White text color
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "#fff", // Border color
+                  },
+                  "&:hover .MuiOutlinedInput-notchedOutline": {
+                    borderColor: "fff", // Border color on hover
+                  },
+                },
+              }}
+            />
           </Grid>
+          <Grid item xs={12} lg={12}>
+            <Typography color="#fff" fontSize="30px">
+              {title}
+            </Typography>
+          </Grid>
+        </Grid>
+
           <Grid container >
             {
             
