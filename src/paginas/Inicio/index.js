@@ -172,7 +172,7 @@ function Inicio() {
             />
           </Grid>
           <Grid item xs={12} lg={12}>
-            <Typography color="#fff" fontSize="30px">
+            <Typography color="#83a96b" fontSize="30px">
               {title}
             </Typography>
           </Grid>
@@ -198,6 +198,7 @@ function Inicio() {
                               sx={{
                               backgroundImage: knownForItem.poster_path ? `url(${myConfig.themoviedb.pathImage + knownForItem.poster_path})` : `url(${posterImg})`,
                               backgroundSize: 'cover',
+                              backgroundPosition: 'center',
                               width: '100%',
                               height: '60vh',
                             }}
@@ -230,6 +231,7 @@ function Inicio() {
                           sx={{
                           backgroundImage: pelicula.poster_path ? `url(${myConfig.themoviedb.pathImage + pelicula.poster_path})` : `url(${posterImg})`,
                           backgroundSize: 'cover',
+                          backgroundPosition: 'center',
                           width: '100%',
                           height: '60vh',
                         }}
