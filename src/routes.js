@@ -1,22 +1,22 @@
-import SignInBasic from "pages/LandingPages/SignIn";
-import SignUpBasic from "pages/LandingPages/SignUp";
+import IngresarBasic from "paginas/LandingPages/Ingresar";
+import RegistrarBasic from "paginas/LandingPages/Registrar";
 import { Navigate } from "react-router-dom";
-import Estrenos from "pages/Estrenos";
-import PeliculasDetalle from "pages/PeliculasDetalle";
-import Generos from "pages/Generos";
-import Favoritos from "pages/Favoritos";
+import Estrenos from "paginas/Estrenos";
+import PeliculasDetalle from "paginas/PeliculasDetalle";
+import Generos from "paginas/Generos";
+import Favoritos from "paginas/Favoritos";
 
 const routes = [
   {
-    name: "Home",
-    route: "/home",
+    name: "Inicio",
+    route: "/inicio",
     type: "internal",
     hideOnRegistered: false,
     hide: true
   },
   {
     name: "Géneros",
-    route: "/pages/generos",
+    route: "/paginas/generos",
     type: "internal",
     component: (
       <div
@@ -36,7 +36,7 @@ const routes = [
   },
   {
     name: "Estrenos",
-    route: "/pages/estrenos",
+    route: "/paginas/estrenos",
     type: "internal",
     component: <Estrenos />,
     hideOnRegistered: true,
@@ -44,7 +44,7 @@ const routes = [
   },
   {
     name: "Favoritos",
-    route: "/pages/favoritos",
+    route: "/paginas/favoritos",
     type: "internal",
     component: <Favoritos />,
     hideOnRegistered: true,
@@ -52,15 +52,15 @@ const routes = [
   },
   {
     name: "Registrate",
-    route: "/pages/authentication/sign-up",
+    route: "/paginas/autenticacion/registrar",
     type: "internal",
-    component: <SignUpBasic />,
+    component: <RegistrarBasic />,
     hideOnRegistered: true,
     hide: true
   },
   {
     name: 'PeliculasDetalle',
-    route: "/pages/peliculasDetalle",
+    route: "/paginas/peliculasDetalle",
     type: "internal",
     component: <PeliculasDetalle />,
     hideOnRegistered: true,
@@ -68,9 +68,9 @@ const routes = [
   },
   {
     name: "SignIn",
-    route: "/pages/authentication/sign-in",
+    route: "/paginas/autenticacion/ingresar",
     type: "internal",
-    component: <SignInBasic />,
+    component: <IngresarBasic />,
     hideOnRegistered: true,
     hide: true
   },

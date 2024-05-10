@@ -10,7 +10,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 // Material Kit 2 React themes
 import theme from "assets/theme";
-import Home from "layouts/pages/home";
 
 // Material Kit 2 React routes
 import * as definedRoutes from "routes";
@@ -19,7 +18,8 @@ import { UserCtx } from "contexts/UserContext";
 // import LogoutPage from "pages/LandingPages/Logout";
 import * as authServices from "./services/auth";
 import { Login } from "@mui/icons-material";
-import SignInBasic from "pages/LandingPages/SignIn";
+import IngresarBasic from "paginas/LandingPages/Ingresar";
+import Inicio from "paginas/Inicio";
 
 export default function App() {
   const { user } = useContext(UserCtx);
@@ -67,8 +67,8 @@ export default function App() {
         <CssBaseline />
         <Routes>
           {/* <Route path="/auth/logout" element={<LogoutPage />} /> */}
-          <Route path="/" element={<SignInBasic />} />
-          <Route path="/pages/home" element={<Home />} />
+          <Route path="/" element={<IngresarBasic />} />
+          <Route path="/paginas/inicio" element={<Inicio />} />
           {getRoutes(definedRoutes.getRoutes(user))}
           {/* <Route path="*" element={<Navigate to="/home" />} /> */}
         </Routes>

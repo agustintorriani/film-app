@@ -23,7 +23,7 @@ import CustomModal from "components/CustomModal/CustomModal";
 import bgImage from "assets/images/bg-login.jpg";
 import { UserCtx } from "contexts/UserContext";
 
-function SignInBasic() {
+function IngresarBasic() {
   const { user, logIn } = useContext(UserCtx);
 
   const [loginData, setLoginData] = useState({
@@ -147,7 +147,7 @@ function SignInBasic() {
                       // onClick={handleSubmit}
                       // disabled={isSubmitting}
                       component={Link}
-                      to="/pages/home"
+                      to="/paginas/inicio"
                       fullWidth
                     >
                       Iniciar Sesión
@@ -183,4 +183,4 @@ function SignInBasic() {
   );
 }
 
-export default SignInBasic;
+export default IngresarBasic;

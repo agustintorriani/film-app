@@ -455,7 +455,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
         <MKBox display="flex" justifyContent="space-between" alignItems="center">
           <MKBox
             component="a"
-            href="/pages/home"
+            href="/paginas/inicio"
             lineHeight={1}
             py={transparent ? 1.5 : 0.75}
             pl={relative || transparent ? 0 : { xs: 0, lg: 1 }}

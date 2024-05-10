@@ -25,7 +25,7 @@ import style from "./style.css";
 import { useNavigate } from 'react-router-dom';
 
 
-function Favoritos() {
+function Estrenos() {
   const { user } = useContext(UserCtx);
   const [peliculas, setPeliculas] = useState([]);
   let navigate = useNavigate();
@@ -54,7 +54,7 @@ function Favoritos() {
 
   let navbarAction = {
     type: "internal",
-    route: "/pages/authentication/sign-in",
+    route: "/",
     label: "Cerrar Sesión",
     color: "colorBase",
   };
@@ -82,7 +82,7 @@ function Favoritos() {
         <Container>
           <Grid container mt={10}>
             <Typography color={"#83a96b"} fontSize={"30px"}>
-              Favoritos
+              Estrenos
             </Typography>
           </Grid>
           <Grid container >
@@ -137,4 +137,4 @@ function Favoritos() {
   );
 }
 
-export default Favoritos;
+export default Estrenos;

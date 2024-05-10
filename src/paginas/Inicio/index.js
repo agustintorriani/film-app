@@ -23,7 +23,7 @@ import { Box, CircularProgress, TextField, Typography } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import posterImg from "assets/images/posterTemplate.png";
 
-function Home() {
+function Inicio() {
   let navigate = useNavigate();
   const { user } = useContext(UserCtx);
   
@@ -128,7 +128,7 @@ function Home() {
 
   let navbarAction = {
     type: "internal",
-    route: "/pages/authentication/sign-in",
+    route: "/",
     label: "Cerrar Sesión",
     color: "colorBase",
   };
@@ -269,4 +269,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Inicio;

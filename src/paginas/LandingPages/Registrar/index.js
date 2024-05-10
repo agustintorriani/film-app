@@ -20,7 +20,7 @@ import { UserCtx } from "contexts/UserContext";
 import CustomModal from "components/CustomModal/CustomModal";
 import toast, { Toaster } from 'react-hot-toast';
 
-function SignUpBasic() {
+function RegistrarBasic() {
   const navigate = useNavigate();
   const { user, register } = useContext(UserCtx);
   const [modalData, setModalData] = useState({
@@ -92,7 +92,7 @@ function SignUpBasic() {
           }
         ).then(() => {
           setTimeout(() => {
-            navigate("/pages/home");
+            navigate("/paginas/inicio");
           }, 2000);
         });
     }
@@ -228,4 +228,4 @@ function SignUpBasic() {
   );
 }
 
-export default SignUpBasic;
+export default RegistrarBasic;
