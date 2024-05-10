@@ -32,8 +32,8 @@ function Listas() {
   const { user } = useContext(UserCtx);
   const { sessionId } = useContext(UserCtx);
 
-  const [peliculas, setPeliculas] = useState([]);
-  const [generos, setGeneros] = useState([]);
+  const [peliculas, setPeliculas] = useState(dataPelis.results);
+  const [generos, setGeneros] = useState([{id: 99999, name:"Favoritos"},{id: 99998, name:"Pendientes"}]);
   const [generosString, setGenerosString] = useState("");
   let navigate = useNavigate();
 
@@ -50,16 +50,16 @@ function Listas() {
         let urlGeneros = myConfig.themoviedb.url + "/genre/movie/list?language=es";
       try {
         let genStr = "";
-
         generos.forEach(element => {
-          genStr += element.id + "|";
-        });
-        genStr = genStr.slice(0, -1);
-        setGenerosString(genStr);
-        console.log("gen",genStr);
-        const response = await fetch(urlGeneros, options);
-        const data = await response.json();
-        setGeneros(data.genres);
+           genStr += element.id + "|";
+         });
+         genStr = genStr.slice(0, -1);
+         setGenerosString(genStr);
+        // console.log("gen",genStr);
+        // const response = await fetch(urlGeneros, options);
+        // const data = await response.json();
+        
+        // setGeneros(data.genres);
 
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -77,7 +77,8 @@ function Listas() {
         try {
           // const response = await fetch(urlPeliculasPorGenero, options);
           // const data = await response.json();
-          setPeliculas(dataPelis.results);
+          // setPeliculas(dataPelis.results);
+          console.log("datapelis",peliculas);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -105,7 +106,7 @@ function Listas() {
       <DefaultNavbar routes={getRoutes(user)} action={navbarAction} sticky />
 
       <MKBox
-        minHeight="250vh"
+        minHeight="150vh"
         width="100%"
         sx={{
           backgroundColor: "#E1F0DA",
@@ -116,7 +117,7 @@ function Listas() {
         }}
       >
         <Container sx={{paddingTop:"3em"}}>
-          {generos.filter((item) => item.id == 878 || item.id == 28).map((genero) => (
+          { generos.filter((item) => item.id == 99999 || item.id == 99998).map((genero) => (
             <Box key={genero.id}>
               <Typography variant="h4" sx={{ marginTop: 4, marginBottom: 2, color:"#83a96b" }}>
                 {/* {genero.name} ({genero.id}) Resultados: { peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length} */}
