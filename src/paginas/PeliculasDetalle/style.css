@@ -40,10 +40,18 @@
     color: red;
 }
 
+#btnAddViews:hover {
+    color: orange;
+}
+
 .pendiente {
     color: green!important;
 }
 
 .favorito {
     color: red!important;
+}
+
+.visto {
+    color: orange!important;
 }

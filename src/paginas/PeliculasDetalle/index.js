@@ -78,6 +78,18 @@ function PeliculasDetalle() {
       }
 
 
+      const handleAddToViews = () => {
+        let btn = document.getElementById("btnAddViews");
+        if(btn.classList.contains("visto")) {
+            document.getElementById("btnAddViews").classList.remove("visto");
+            toast.success("Se ha removido de vistos")
+          } else {
+            document.getElementById("btnAddViews").classList.add("visto");
+            toast.success("Se ha agregado a vistos")
+        }
+      }
+
+      
     useEffect(() => {
       const fetchDataPelicula = async () => {
         try {
@@ -137,9 +149,13 @@ function PeliculasDetalle() {
                                   <Button id="btnAddFav" sx={{marginRight:"10px"}} variant="contained" color="colorBase" onClick={handleAddToFavorites}>
                                     <Favorite /> Agregar a Favoritos
                                   </Button>
-                                  <Button id="btnAddPending" variant="contained" color="colorBase" onClick={handleAddToWatchlist}>
+                                  <Button id="btnAddPending" sx={{marginRight:"10px"}} variant="contained" color="colorBase" onClick={handleAddToWatchlist}>
                                     <BookmarkIcon />
                                     Agregar a Pendientes
+                                  </Button>
+                                  <Button id="btnAddViews" variant="contained" color="colorBase" onClick={handleAddToViews}>
+                                    <BookmarkIcon />
+                                    Agregar a Vistos
                                   </Button>
                                 </Box>
                             </Grid>
