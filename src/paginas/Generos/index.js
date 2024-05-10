@@ -127,7 +127,8 @@ function Generos() {
                           sx={{
                           backgroundImage: `url(${myConfig.themoviedb.pathImage + pelicula.poster_path})`,
                           backgroundSize: 'cover',
-                          width: '300px',
+                          backgroundPosition: "center",
+                          width: '350px',
                           height: '100%',
                           }}
                         >
