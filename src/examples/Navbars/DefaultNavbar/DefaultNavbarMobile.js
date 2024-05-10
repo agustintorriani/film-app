@@ -31,7 +31,7 @@ import MKTypography from "components/MKTypography";
 import DefaultNavbarDropdown from "examples/Navbars/DefaultNavbar/DefaultNavbarDropdown";
 
 function DefaultNavbarMobile({ routes, open }) {
-  const renderNavbarItems = routes.map(({ name, icon, collapse: routeCollapses, href, route }) => (
+  const renderNavbarItems = routes.filter( item => item.hide == false).map(({ name, icon, collapse: routeCollapses, href, route }) => (
     <DefaultNavbarDropdown key={name} name={name} icon={icon} href={href} route={route}>
       <MKBox sx={{ height: "15rem", maxHeight: "15rem", overflowY: "scroll" }}>
         {routeCollapses &&
