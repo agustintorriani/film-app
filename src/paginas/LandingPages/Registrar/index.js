@@ -195,7 +195,7 @@ function RegistrarBasic() {
                       onClick={handleSubmit}
                       disabled={isSubmitting}
                     >
-                      Registrar
+                      Registrarme
                     </MKButton>
                   </MKBox>
                   <MKBox mt={1} mb={1} textAlign="center">
@@ -203,7 +203,7 @@ function RegistrarBasic() {
                       ¿Ya estás registrado?{" "}
                       <MKTypography
                         component={Link}
-                        to="/pages/authentication/sign-in"
+                        to="/paginas/autenticacion/ingresar"
                         variant="button"
                         color="colorBase"
                         fontWeight="medium"

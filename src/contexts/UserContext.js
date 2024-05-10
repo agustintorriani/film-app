@@ -68,7 +68,7 @@ export const UserContext = ({ children }) => {
             title: res.message || "Usuario creado",
             text: (
               <>
-                <Link to={"/pages/authentication/sign-in"} onClick={handleClose}>
+                <Link to={"/paginas/autenticacion/ingresar"} onClick={handleClose}>
                   Inicie sesion
                 </Link>{" "}
                 con las credenciales proporcionadas {res.email ? `para ${res.email}` : ""}

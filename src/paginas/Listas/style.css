@@ -1,0 +1,34 @@
+/* .genre-tag{
+    margin-right: 10px!important;
+    margin-bottom: 2%!important;
+    transition: transform .2s; 
+    -webkit-user-select:none;-moz-user-select:-moz-none;
+    -ms-user-select:none;user-select:none;
+}
+
+.genre-tag:hover {
+    transform: scale(1.1);
+  }
+
+.genre-title{
+    color: #1e6091;
+    cursor: pointer;
+    background-color: #52b69a;
+    border-radius: 10px 100px / 120px;
+    margin-bottom: 10px;
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.genre-title:hover{
+    color: #eaeaea;
+} */
+
+.company{
+    margin-right: 10px;
+}
+
+.scroll-container{
+    height: 65vh!important;
+}

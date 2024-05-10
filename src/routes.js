@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import Estrenos from "paginas/Estrenos";
 import PeliculasDetalle from "paginas/PeliculasDetalle";
 import Generos from "paginas/Generos";
-import Favoritos from "paginas/Favoritos";
+import Listas from "paginas/Listas";
 
 const routes = [
   {
@@ -43,10 +43,10 @@ const routes = [
     hide: false
   },
   {
-    name: "Favoritos",
-    route: "/paginas/favoritos",
+    name: "Mis Listas",
+    route: "/paginas/listas",
     type: "internal",
-    component: <Favoritos />,
+    component: <Listas />,
     hideOnRegistered: true,
     hide: false
   },
