@@ -20,7 +20,7 @@ import { UserCtx } from "contexts/UserContext";
 
 import logoImage from "assets/images/logo.png";
 import { myConfig } from '../../config.js'
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import style from "./style.css";
 import { useNavigate } from "react-router-dom";
 import HorizontalScroll from "react-scroll-horizontal"
@@ -30,7 +30,7 @@ import dataPelis from '../../assets/dataPelis.json';
 function Generos() {
   const { user } = useContext(UserCtx);
   const { sessionId } = useContext(UserCtx);
-
+  const [ isLoading, setIsLoading ] = useState(true);
   const [peliculas, setPeliculas] = useState([]);
   const [generos, setGeneros] = useState([]);
   const [generosString, setGenerosString] = useState("");
@@ -55,7 +55,6 @@ function Generos() {
         });
         genStr = genStr.slice(0, -1);
         setGenerosString(genStr);
-        console.log("gen",genStr);
         const response = await fetch(urlGeneros, options);
         const data = await response.json();
         setGeneros(data.genres);
@@ -77,6 +76,9 @@ function Generos() {
           // const response = await fetch(urlPeliculasPorGenero, options);
           // const data = await response.json();
           setPeliculas(dataPelis.results);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -113,14 +115,24 @@ function Generos() {
         }}
       >
         <Container sx={{paddingTop:"3em"}}>
-          {generos.filter((item) => item.id != 10770).map((genero) => (
+          {
+           isLoading == true ? (
+            <Grid item xs={12} lg={12} >
+                <Box xs={4} display="flex" textAlign={"center"} justifyContent="center" p={4}>
+                    <CircularProgress />
+                </Box>
+            </Grid>
+          ) : (
+          generos.filter((item) => item.id != 10770).map((genero) => (
             <Box key={genero.id}>
               <Typography variant="h4" sx={{ marginTop: 4, marginBottom: 2, color:"#83a96b" }}>
                 {/* {genero.name} ({genero.id}) Resultados: { peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length} */}
                 {genero.name} ({ peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length})
               </Typography>
               <HorizontalScroll className="scroll-container">
-                { peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id))
+                {
+              
+                peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id))
                   .map((pelicula) => (
                     <Grid item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3} onClick={handleClickFilm}>
                         <Box xs={4}
@@ -155,7 +167,7 @@ function Generos() {
                   ))}
               </HorizontalScroll>
             </Box>
-          ))}
+          )))}
 
         </Container>
       </MKBox>

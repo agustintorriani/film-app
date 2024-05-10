@@ -20,7 +20,7 @@ import { UserCtx } from "contexts/UserContext";
 
 import logoImage from "assets/images/logo.png";
 import { myConfig } from '../../config.js'
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import style from "./style.css";
 import { useNavigate } from 'react-router-dom';
 
@@ -29,6 +29,7 @@ function Estrenos() {
   const { user } = useContext(UserCtx);
   const [peliculas, setPeliculas] = useState([]);
   let navigate = useNavigate();
+  const [ isLoading, setIsLoading ] = useState(true);
 
   const options = {
     method: 'GET',
@@ -45,6 +46,9 @@ function Estrenos() {
         const response = await fetch(urlGeneros, options);
         const data = await response.json();
         setPeliculas(data.results);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -86,7 +90,14 @@ function Estrenos() {
             </Typography>
           </Grid>
           <Grid container >
-            {
+          {
+           isLoading == true ? (
+            <Grid item xs={12} lg={12} >
+                <Box xs={4} display="flex" textAlign={"center"} justifyContent="center" p={4}>
+                    <CircularProgress />
+                </Box>
+            </Grid>
+          ) : (
             peliculas.map((pelicula) => (
             <Grid sx={{height: '60vh'}} item className="one" film-id={pelicula.id} key={pelicula.id} xs={12} lg={3} onClick={handleClickFilm}>
               <Box xs={4}
@@ -121,7 +132,7 @@ function Estrenos() {
 
               </Box>
             </Grid>
-            ))}
+            )))}
           </Grid>
         </Container>
       </MKBox>

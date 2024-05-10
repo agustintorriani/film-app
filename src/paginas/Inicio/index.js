@@ -33,6 +33,7 @@ function Inicio() {
   const [peliculas, setPeliculas] = useState([]);
   const [peliculasBuscador, setPeliculasBuscador] = useState([]);
   const [peliculasAMostrar, setPeliculasAMostrar] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(true);
 
   const options = {
     method: 'GET',
@@ -48,6 +49,9 @@ function Inicio() {
         const response = await fetch(url, options);
         const data = await response.json();
         setPeliculasAMostrar(data.results);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -181,7 +185,7 @@ function Inicio() {
           <Grid container >
             {
             
-              peliculasAMostrar.length == 0 ? (
+              isLoading == true ? (
                 <Grid item xs={12} lg={12} >
                     <Box xs={4} display="flex" textAlign={"center"} justifyContent="center" p={4}>
                         <CircularProgress />

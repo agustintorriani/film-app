@@ -20,7 +20,7 @@ import { UserCtx } from "contexts/UserContext";
 
 import logoImage from "assets/images/logo.png";
 import { myConfig } from '../../config.js'
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import style from "./style.css";
 import { useNavigate } from "react-router-dom";
 import HorizontalScroll from "react-scroll-horizontal"
@@ -36,6 +36,7 @@ function Listas() {
   const [generos, setGeneros] = useState([{id: 99999, name:"Favoritos"},{id: 99998, name:"Pendientes"}]);
   const [generosString, setGenerosString] = useState("");
   let navigate = useNavigate();
+  const [ isLoading, setIsLoading ] = useState(true);
 
   const options = {
     method: 'GET',
@@ -60,7 +61,9 @@ function Listas() {
         // const data = await response.json();
         
         // setGeneros(data.genres);
-
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -117,7 +120,14 @@ function Listas() {
         }}
       >
         <Container sx={{paddingTop:"3em"}}>
-          { generos.filter((item) => item.id == 99999 || item.id == 99998).map((genero) => (
+           {
+           isLoading == true ? (
+            <Grid item xs={12} lg={12} >
+                <Box xs={4} display="flex" textAlign={"center"} justifyContent="center" p={4}>
+                    <CircularProgress />
+                </Box>
+            </Grid>
+          ) : ( generos.filter((item) => item.id == 99999 || item.id == 99998).map((genero) => (
             <Box key={genero.id}>
               <Typography variant="h4" sx={{ marginTop: 4, marginBottom: 2, color:"#83a96b" }}>
                 {/* {genero.name} ({genero.id}) Resultados: { peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length} */}
@@ -158,7 +168,7 @@ function Listas() {
                   ))}
               </HorizontalScroll>
             </Box>
-          ))}
+          )))}
 
         </Container>
       </MKBox>
