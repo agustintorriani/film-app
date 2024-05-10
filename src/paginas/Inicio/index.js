@@ -98,7 +98,7 @@ function Inicio() {
   }, [peliculasBuscador]); // Este useEffect se ejecutará cada vez que peliculasAMostrar cambie
 
   const handleClickFilm = (event) => {
-    let url = "/pages/peliculasDetalle?id=" + event.currentTarget.getAttribute("film-id");
+    let url = "/paginas/peliculasDetalle?id=" + event.currentTarget.getAttribute("film-id");
     navigate(url, { replace: true });
   };
 

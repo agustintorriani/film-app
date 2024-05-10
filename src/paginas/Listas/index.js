@@ -94,7 +94,7 @@ function Listas() {
   };
 
   const handleClickFilm = (event) => {
-    let url = "/pages/peliculasDetalle?id=" + event.currentTarget.getAttribute("film-id");
+    let url = "/paginas/peliculasDetalle?id=" + event.currentTarget.getAttribute("film-id");
     navigate(url, { replace: true });
   };
 
