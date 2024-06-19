@@ -27,8 +27,8 @@ function IngresarBasic() {
   const { user, logIn } = useContext(UserCtx);
 
   const [loginData, setLoginData] = useState({
-    email: "",
-    password: "",
+    email: "prueba",
+    password: "1",
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,21 +53,20 @@ function IngresarBasic() {
   }
 
   async function handleSubmit(e) {
-    // e.preventDefault();
+    e.preventDefault();
+    try {
+      await Promise.resolve()
+        .then(() => setIsSubmitting(true))
+        .then(() => logIn(loginData));
+    } catch (err) {
+      setModalData({
+        open: true,
+        title: "Error en inicio de sesion",
+        text: err,
+      });
+    }
 
-    // try {
-    //   await Promise.resolve()
-    //     .then(() => setIsSubmitting(true))
-    //     .then(() => logIn(loginData));
-    // } catch (err) {
-    //   setModalData({
-    //     open: true,
-    //     title: "Error en inicio de sesion",
-    //     text: err,
-    //   });
-    // }
-
-    //setIsSubmitting(false);
+    setIsSubmitting(false);
   }
 
   return (
@@ -107,7 +106,7 @@ function IngresarBasic() {
                 mb={1}
                 textAlign="center"
               >
-                <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                <MKTypography variant="h4" fontWeight="medium" mt={1} >
                   Iniciar Sesión
                 </MKTypography>
               </MKBox>
@@ -144,11 +143,12 @@ function IngresarBasic() {
                       variant="contained"
                       color="colorBase"
                       type="submit"
-                      // onClick={handleSubmit}
-                      // disabled={isSubmitting}
-                      component={Link}
-                      to="/paginas/inicio"
+                      onClick={handleSubmit}
+                      disabled={isSubmitting}
+                      // component={Link}
+                      // to="/paginas/inicio"
                       fullWidth
+                      sx={{ color:"#f7c600!important" }}
                     >
                       Iniciar Sesión
                     </MKButton>

@@ -27,9 +27,12 @@ import ReactCountryFlag from "react-country-flag";
 import { Rating } from 'react-simple-star-rating'
 import styles from './style.css';
 import logo from '../../assets/images/userDefault.png';
-import { Favorite } from "@mui/icons-material";
+import { Favorite, PeopleOutline } from "@mui/icons-material";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import toast, { Toaster } from 'react-hot-toast';
+import * as userListServices from "services/userList";
+
+
 
 function PeliculasDetalle() {
     const { user } = useContext(UserCtx);
@@ -39,7 +42,9 @@ function PeliculasDetalle() {
     const url = myConfig.themoviedb.url + "/movie/"+ filmId +"?language=es-ES";
     const [pelicula, setPelicula] = useState();
     const [comentarios, setComentarios] = useState([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
+    
     let navbarAction = {
       type: "internal",
       route: "/",
@@ -55,40 +60,87 @@ function PeliculasDetalle() {
       }
     };
 
-      const handleAddToFavorites = () => {
-        let btn = document.getElementById("btnAddFav");
-        if(btn.classList.contains("favorito")) {
-            document.getElementById("btnAddFav").classList.remove("favorito");
-            toast.success("Se ha removido de favoritos")
-          } else {
-            document.getElementById("btnAddFav").classList.add("favorito");
-            toast.success("Se ha agregado a favoritos")
-        }
+    
+
+      
+    async function handleAddToFavorites(e) {
+      e.preventDefault();
+      try {
+        await Promise.resolve()
+          .then(() => setIsSubmitting(true))
+          .then(() => userListServices.addToList("664e59c1cc0d3547f8d65fb3",1,pelicula.id))
+          .then((res) => {
+            let btn = document.getElementById("btnAddFav");
+            if(btn.classList.contains("favorito")) {
+                  btnAdd(btn,false,"favorito");
+                toast.success("Se ha removido de favoritos")
+              } else {
+                  btnAdd(btn,true,"favorito");
+                toast.success("Se ha agregado a favoritos")
+            }
+          })
+      } catch (err) {
+        toast.success("Se ha producido un error al agregar a favoritos") 
       }
+      setIsSubmitting(false);
+    }
 
-      const handleAddToWatchlist = () => {
-        let btn = document.getElementById("btnAddPending");
-        if(btn.classList.contains("pendiente")) {
-            document.getElementById("btnAddPending").classList.remove("pendiente");
-            toast.success("Se ha removido de pendientes")
-          } else {
-            document.getElementById("btnAddPending").classList.add("pendiente");
-            toast.success("Se ha agregado a pendientes")
-        }
+    async function handleAddToWatchlist(e) {
+      e.preventDefault();
+      try {
+        await Promise.resolve()
+          .then(() => setIsSubmitting(true))
+          .then(() => userListServices.addToList("664e59c1cc0d3547f8d65fb3",2,pelicula.id))
+          .then((res) => {
+            console.log("res",res);
+            let btn = document.getElementById("btnAddPending");
+              if(btn.classList.contains("pendiente")) {
+                  btnAdd(btn,false,"pendiente");
+                  toast.success("Se ha removido de pendientes")
+                } else {
+                  btnAdd(btn,true,"pendiente");
+                  toast.success("Se ha agregado a pendientes")
+              }
+          })
+      } catch (err) {
+        toast.success("Se ha producido un error al agregar a favoritos") 
       }
+      setIsSubmitting(false);
+    }
 
 
-      const handleAddToViews = () => {
-        let btn = document.getElementById("btnAddViews");
-        if(btn.classList.contains("visto")) {
-            document.getElementById("btnAddViews").classList.remove("visto");
-            toast.success("Se ha removido de vistos")
-          } else {
-            document.getElementById("btnAddViews").classList.add("visto");
-            toast.success("Se ha agregado a vistos")
-        }
+    async function handleAddToViews(e) {
+      e.preventDefault();
+      try {
+        await Promise.resolve()
+          .then(() => setIsSubmitting(true))
+          .then(() => userListServices.addToList("664e59c1cc0d3547f8d65fb3",3,pelicula.id))
+          .then((res) => {
+            console.log("res",res);
+
+            let btn = document.getElementById("btnAddViews");
+            if(btn.classList.contains("visto")) {
+                btnAdd(btn,false,"visto");
+                toast.success("Se ha removido de vistos")
+              } else {
+                btnAdd(btn,true,"visto");
+                toast.success("Se ha agregado a vistos")
+            }
+          })
+      } catch (err) {
+        toast.success("Se ha producido un error al agregar a favoritos") 
       }
+      setIsSubmitting(false);
+    }
 
+
+    function btnAdd(btn, option, clase){
+        if(option){
+          btn.classList.add(clase);
+        } else {
+          btn.classList.remove(clase);
+        }
+    }
       
     useEffect(() => {
       const fetchDataPelicula = async () => {
@@ -114,8 +166,31 @@ function PeliculasDetalle() {
         }
       };
 
+      const obtenerListasPorPelicula = async () => {
+        try {
+          let res = await userListServices.getListByFilm("664e59c1cc0d3547f8d65fb3", 823464);
+          console.log("resultado de listas",res);
+
+          if (res.some(obj => obj.listId === 1)) {
+              btnAdd(document.getElementById("btnAddFav"),true,"favorito");
+          }
+
+          if (res.some(obj => obj.listId === 2)) {
+            btnAdd(document.getElementById("btnAddPending"),true,"pendiente");
+          }
+
+          if (res.some(obj => obj.listId === 3)) {
+            btnAdd(document.getElementById("btnAddViews"),true,"visto");
+          }
+
+        } catch (error) {
+          console.log("ocurrio un error",error);
+        }
+      }
+
       fetchDataPelicula();
       fetchComentarios();
+      obtenerListasPorPelicula();
     }, []);
   
   
@@ -126,7 +201,7 @@ function PeliculasDetalle() {
       <MKBox
         width="100%"
         sx={{
-          backgroundColor: "#E1F0DA",
+          backgroundColor: "#141414",
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
@@ -149,19 +224,19 @@ function PeliculasDetalle() {
                                   <Button id="btnAddFav" sx={{marginRight:"10px"}} variant="contained" color="colorBase" onClick={handleAddToFavorites}>
                                     <Favorite /> Agregar a Favoritos
                                   </Button>
-                                  <Button id="btnAddPending" sx={{marginRight:"10px"}} variant="contained" color="colorBase" onClick={handleAddToWatchlist}>
+                                  <Button  id="btnAddPending" sx={{marginRight:"10px"}} variant="contained" color="colorBase" onClick={handleAddToWatchlist}>
                                     <BookmarkIcon />
                                     Agregar a Pendientes
                                   </Button>
-                                  <Button id="btnAddViews" variant="contained" color="colorBase" onClick={handleAddToViews}>
+                                  <Button  id="btnAddViews" variant="contained" color="colorBase" onClick={handleAddToViews}>
                                     <BookmarkIcon />
                                     Agregar a Vistos
                                   </Button>
                                 </Box>
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <Box color={"#708f5d"}>
-                                    <Typography variant="h2" color={"#708f5d"} gutterBottom>
+                                <Box color={"#f7c600"}>
+                                    <Typography variant="h2" color={"#f7c600"} gutterBottom>
                                         {pelicula.title}
                                     </Typography>
                                     <Typography variant="subtitle1" gutterBottom>
@@ -201,7 +276,7 @@ function PeliculasDetalle() {
                                 </Box>
                             </Grid>
                             <Grid mt={10} item>
-                                <Typography sx={{color: "#708f5d"}}  gutterBottom>
+                                <Typography sx={{color: "#f7c600"}}  gutterBottom>
                                         Comentarios:
                                 </Typography>
                                 {comentarios.length > 0 ? (
@@ -215,7 +290,7 @@ function PeliculasDetalle() {
                                         marginBottom: "10px",
                                       }}
                                     >
-                                      <Typography sx={{color: "#708f5d;"}} gutterBottom>
+                                      <Typography sx={{color: "#f7c600;"}} gutterBottom>
                                         {comentario.author_details.avatar_path ? (
                                           <img className="author-photo" src={myConfig.themoviedb.pathImage + comentario.author_details.avatar_path} alt={comentario.author_name} />
                                         ) : (
@@ -226,13 +301,13 @@ function PeliculasDetalle() {
                                         )}
                                         <b>{comentario.author}</b>
                                       </Typography>
-                                      <Typography className="comentario" sx={{color: "#708f5d;"}} gutterBottom>
+                                      <Typography className="comentario" sx={{color: "#f7c600;"}} gutterBottom>
                                         {comentario.content}
                                       </Typography>
                                     </Box>
                                   ))
                                 ) : (
-                                  <Typography sx={{color: "#708f5d;"}} gutterBottom>
+                                  <Typography sx={{color: "#f7c600;"}} gutterBottom>
                                     No hay comentarios disponibles.
                                   </Typography>
                                 )}
@@ -241,7 +316,7 @@ function PeliculasDetalle() {
                     ) : (
                         <Grid item xs={12}>
                             <Box display="flex" justifyContent="center" p={4}>
-                                <CircularProgress />
+                                <CircularProgress style={{ color:"#f7c600" }}/>
                             </Box>
                         </Grid>
                     )}

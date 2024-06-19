@@ -76,7 +76,7 @@ function Estrenos() {
         minHeight="250vh"
         width="100%"
         sx={{
-          backgroundColor: "#E1F0DA",
+          backgroundColor: "#141414",
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
@@ -85,7 +85,7 @@ function Estrenos() {
       >
         <Container>
           <Grid container mt={10}>
-            <Typography color={"#83a96b"} fontSize={"30px"}>
+            <Typography variant="h4" color={"#f7c600"} fontSize={"30px"}>
               Estrenos
             </Typography>
           </Grid>
@@ -94,7 +94,7 @@ function Estrenos() {
            isLoading == true ? (
             <Grid item xs={12} lg={12} >
                 <Box xs={4} display="flex" textAlign={"center"} justifyContent="center" p={4}>
-                    <CircularProgress />
+                    <CircularProgress style={{ color:"#f7c600" }}/>
                 </Box>
             </Grid>
           ) : (

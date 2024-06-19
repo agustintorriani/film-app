@@ -2,6 +2,8 @@ import React, { useState, createContext, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import ModalOnAuth from "components/CustomModal/CustomModal";
 import AdminAccess from "components/AdminBtnAccess";
+import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 import jwtDecode from "jwt-decode";
 import * as authServices from "services/auth";
@@ -22,6 +24,7 @@ export const UserContext = ({ children }) => {
   const location = useLocation();
   let [pathname, setPathname] = useState(location.pathname);
   const [sessionId, setSessionId] = useState(null);
+  let navigate = useNavigate();
 
   const [user, setUser] = useState(null);
   const [modalData, setModalData] = useState({
@@ -38,23 +41,23 @@ export const UserContext = ({ children }) => {
     authServices
       .login(email, password)
       .then(async (res) => {
-        if (res.status === 200 && res.token) {
-          let data = await jwtDecode(res.token);
-          return { ...data, token: res.token };
+        console.log("res",res);
+        if (res.status === 200 && res.data.token) {
+          let data = await jwtDecode(res.data.token);
+          navigate("/paginas/inicio", { replace: true });  
+          return { ...data, token: res.data.token };
         }
-        if (res) {
-          throw "Verifique credenciales ingresadas";
+        if (!res.success) {
+          toast.error("Verifique credenciales ingresadas")
+        } else if(res.status === 500) {
+        toast.error("Error inesperado, intente mas tarde")
         }
-
-        throw "Error inesperado, intente mas tarde";
       })
-      .then(setUser)
+      // .then({
+      //  setUser(res.data.user);
+      // })
       .catch((err) =>
-        setModalData({
-          open: true,
-          title: "Error en inicio de sesion",
-          text: err.message || err,
-        })
+        toast.error("Error en inicio de sesion")
       );
   }
 
@@ -113,6 +116,7 @@ export const UserContext = ({ children }) => {
   }, [location.pathname]);
 
   return (
+
     <UserCtx.Provider
       value={{
         user,
@@ -124,6 +128,7 @@ export const UserContext = ({ children }) => {
         getSessionId,
       }}
     >
+      <div><Toaster position="bottom-center"/></div>
       {user?.isAdmin && pathname !== "/admin/inbox" && <AdminAccess />}
       <ModalOnAuth open={modalData.open} modalData={modalData} handleClose={handleClose} />
       {children}

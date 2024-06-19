@@ -17,7 +17,7 @@ function DefaultFooter({ content }) {
   const date = new Date().getFullYear();
 
   return (
-    <MKBox component="footer" bgColor="#E1F0DA">
+    <MKBox component="footer" bgColor="#141414">
       <Container>
         <Grid container spacing={3}>
           <Grid item xs={12} md={3} sx={{ ml: "auto", mb: 3 }}>
@@ -84,7 +84,7 @@ function DefaultFooter({ content }) {
               </MKBox>
             </Grid>
           ))}
-          <Grid item xs={12} sx={{ textAlign: "center", my: 3, fontSize:"16px" ,color: "#708f5d"  }}>
+          <Grid item xs={12} sx={{ textAlign: "center", my: 3, fontSize:"16px" ,color: "#f7c600"  }}>
               Todos los derechos reservados. Copyright &copy; {date}
           </Grid>
         </Grid>

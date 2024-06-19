@@ -3,7 +3,10 @@ import { myConfig } from "config";
 async function login(email, password) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-
+  myHeaders.append("x-acces-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU1YzY1NzcxYTZjNTQ5ZGRhZjEyNSIsImlhdCI6MTcxODUwODY0NSwiZXhwIjoxNzE4NTk1MDQ1fQ.OPxEWTCVaOcyxHt6RVF8G0-mq-dqBB0V5xbotv8FM3k");
+  myHeaders.append("Accept","*/*");
+  myHeaders.append("Connection","keep-alive");
+  myHeaders.append("Accept-Encoding","gzip, deflate, br");
 
   var raw = JSON.stringify({
     email: email,
@@ -18,10 +21,12 @@ async function login(email, password) {
   };
 
   try {
-    let data = await fetch("http://localhost:8080/api/usuarios/login", requestOptions);
-    return await data.json();
+    let data = await fetch("http://localhost:4000/api/users/login", requestOptions);
+    let prueba = await data.json();
+    console.log("prueba",prueba);
+    return prueba;
   } catch (err) {
-    console.warn(err);
+    // console.warn(err);
     return null;
   }
 }
@@ -45,7 +50,7 @@ async function register(name, lastname, email, password) {
   };
 
   try {
-    let data = await fetch("http://localhost:8080/api/usuarios/register", requestOptions);
+    let data = await fetch("http://localhost:4000/api/usuarios/register", requestOptions);
     return await data.json();
   } catch (err) {
     console.warn(err);

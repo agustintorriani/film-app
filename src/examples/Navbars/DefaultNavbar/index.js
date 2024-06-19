@@ -26,6 +26,8 @@ import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMob
 
 // Material Kit 2 React base styles
 import breakpoints from "assets/theme/base/breakpoints";
+import EmojiNatureIcon from '@mui/icons-material/EmojiNature';
+import bee from '../../../assets/images/bee.png';
 
 function DefaultNavbar({ brand, routes, transparent, light, action, sticky, relative, center }) {
   const [dropdown, setDropdown] = useState("");
@@ -448,7 +450,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
         left={0}
         zIndex={3}
         sx={({ palette: { transparent: transparentColor, white }, functions: { rgba } }) => ({
-          backgroundColor: transparent ? transparentColor.main : rgba(white.main, 0.8),
+          backgroundColor: transparent ? transparentColor.main : "#28262680",
           backdropFilter: transparent ? "none" : `saturate(200%) blur(30px)`,
         })}
       >
@@ -461,10 +463,16 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             pl={relative || transparent ? 0 : { xs: 0, lg: 1 }}
           >
             {/* <MKTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}> */}
-            <MKTypography variant="button" color={"brand"} fontWeight="bold">
+            <MKTypography variant="button" color={"brand"} fontWeight="bold" fontSize="25px">
               {brand}
             </MKTypography>
           </MKBox>
+          <img
+                                            className="logo"
+                                            src={bee}
+                                            alt="bee"
+                                            style={{ width: "25px", height: "25px" }}
+                                          />
 
           <MKBox
             color="inherit"
@@ -485,7 +493,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
                       ? "contained"
                       : "gradient"
                   }
-                  color={action.color ? action.color : "colorBase"}
+                  color={action.color ? action.color : "yellow"}
                   size="small"
                 >
                   {action.label}
@@ -537,7 +545,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
 
 // Setting default values for the props of DefaultNavbar
 DefaultNavbar.defaultProps = {
-  brand: "FilmApp 🎬",
+  brand: "Mobee" ,
   transparent: false,
   light: false,
   action: false,
@@ -569,6 +577,7 @@ DefaultNavbar.propTypes = {
         "light",
         "default",
         "white",
+        "yellow"
       ]),
       label: PropTypes.string.isRequired,
     }),

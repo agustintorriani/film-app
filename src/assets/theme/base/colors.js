@@ -12,7 +12,7 @@ export default {
     main: "#a9c399",
   },
   brand: {
-    main: "#708f5d",
+    main: "#f7c600",
     state: "#a9c399",
   },
 
@@ -43,11 +43,11 @@ export default {
 
   info: {
     main: "#1A73E8",
-    focus: "#1662C4",
+    focus: "#141414",
   },
 
   colorBase: {
-    main: "#BFD8AF",
+    main: "#141414",
     state: "#a9c399",
   },
 
@@ -72,7 +72,7 @@ export default {
   },
 
   dark: {
-    main: "#344767",
+    main: "#f7c600",
     focus: "#2c3c58",
   },
 
@@ -94,12 +94,17 @@ export default {
       state: "#D81B60",
     },
 
+    yellow: {
+      main: "#f7c600",
+      state: "#f7c600",
+    },
+
     colorBase: {
-      main: "#BFD8AF",
-      state: "#a9c399",
+      main: "#141414",
+      state: "#141414",
     },
     brand: {
-      main: "#708f5d",
+      main: "#f7c600",
       state: "#a9c399",
     },
     lbl: {
@@ -153,11 +158,11 @@ export default {
       dark: "#3ea1ec",
     },
     brand: {
-      main: "#708f5d",
+      main: "#f7c600",
       state: "#a9c399",
     },
     colorBase: {
-      main: "#BFD8AF",
+      main: "#f7c600",
       state: "#a9c399",
     },
     lbl: {
@@ -224,11 +229,11 @@ export default {
       main: "#99BC85",
     },
     colorBase: {
-      main: "#BFD8AF",
-      state: "#a9c399",
+      main: "#f7c600",
+      state: "#f7c600",
     },
     brand: {
-      main: "#708f5d",
+      main: "f7c600",
       state: "#a9c399",
     },
     secondary: {
@@ -276,9 +281,9 @@ export default {
     error: "#f44336",
     light: "#adb5bd",
     dark: "#404040",
-    colorBase: "#BFD8AF",
+    colorBase: "#dfb405",
     lbl: "#99BC85",
-    brand: "#708f5d",
+    brand: "#f7c600",
   },
 
   inputBorderColor: "#d2d6da",

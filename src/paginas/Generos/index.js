@@ -107,7 +107,7 @@ function Generos() {
         minHeight="250vh"
         width="100%"
         sx={{
-          backgroundColor: "#E1F0DA",
+          backgroundColor: "#141414",
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
@@ -119,13 +119,13 @@ function Generos() {
            isLoading == true ? (
             <Grid item xs={12} lg={12} >
                 <Box xs={4} display="flex" textAlign={"center"} justifyContent="center" p={4}>
-                    <CircularProgress />
+                    <CircularProgress style={{ color:"#f7c600" }}/>
                 </Box>
             </Grid>
           ) : (
           generos.filter((item) => item.id != 10770).map((genero) => (
             <Box key={genero.id}>
-              <Typography variant="h4" sx={{ marginTop: 4, marginBottom: 2, color:"#83a96b" }}>
+              <Typography variant="h3" sx={{ marginTop: 4, marginBottom: 2, color:"#f7c600" }}>
                 {/* {genero.name} ({genero.id}) Resultados: { peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length} */}
                 {genero.name} ({ peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length})
               </Typography>

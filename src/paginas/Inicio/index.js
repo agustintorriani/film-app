@@ -19,9 +19,10 @@ import { UserCtx } from "contexts/UserContext";
 import logoImage from "assets/images/logo.png";
 import { myConfig } from '../../config.js'
 import styles from "./style.css";
-import { Box, CircularProgress, TextField, Typography } from "@mui/material";
+import { Box, CircularProgress, IconButton, TextField, Typography } from "@mui/material";
 import { Search } from "@mui/icons-material";
 import posterImg from "assets/images/posterTemplate.png";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function Inicio() {
   let navigate = useNavigate();
@@ -29,7 +30,7 @@ function Inicio() {
   
   const url = myConfig.themoviedb.url + "movie/popular?language=es-ES&page=1";
   const [searchValue, setSearchValue] = useState("");
-  const [title, setTitle] = useState("Top 20 mas populares");
+  const [title, setTitle] = useState("Más Populares");
   const [peliculas, setPeliculas] = useState([]);
   const [peliculasBuscador, setPeliculasBuscador] = useState([]);
   const [peliculasAMostrar, setPeliculasAMostrar] = useState([]);
@@ -144,7 +145,7 @@ function Inicio() {
         minHeight="250vh"
         width="100%"
         sx={{
-          backgroundColor: "#E1F0DA",
+          backgroundColor: "#141414",
           backgroundSize: "cover",
           backgroundPosition: "top",
           display: "grid",
@@ -163,7 +164,7 @@ function Inicio() {
               onKeyDown={handleSearch}
               InputProps={{
                 sx: {
-                  backgroundColor: "rgba(0, 128, 0, 0.25)", // Transparent darker green background
+                  backgroundColor: "rgba(241, 194, 1, 0.85)", // Transparent darker green background
                   color: "#fff", // White text color
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#fff", // Border color
@@ -176,7 +177,7 @@ function Inicio() {
             />
           </Grid>
           <Grid item xs={12} lg={12}>
-            <Typography color="#83a96b" fontSize="30px">
+            <Typography variant="h4" color="#f7c600"  fontSize="30px">
               {title}
             </Typography>
           </Grid>
@@ -188,7 +189,7 @@ function Inicio() {
               isLoading == true ? (
                 <Grid item xs={12} lg={12} >
                     <Box xs={4} display="flex" textAlign={"center"} justifyContent="center" p={4}>
-                        <CircularProgress />
+                        <CircularProgress style={{ color:"#f7c600" }}/>
                     </Box>
                 </Grid>
               ) : (
@@ -244,7 +245,7 @@ function Inicio() {
                             <MKTypography className="title">
                               {pelicula.title != undefined ? pelicula.title : pelicula.name}
                             </MKTypography>
-          
+
                             <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
                               {pelicula.overview?.length > 0 ? (
                                 <MKTypography  sx={{color:"#fff"}}  className="overview">
@@ -256,6 +257,10 @@ function Inicio() {
                                 </MKTypography>
                               )}
                             </Box>
+
+                            <IconButton  sx={{ color: 'white' }}>
+                              <FavoriteIcon />
+                            </IconButton>
                           </Box>
                         </Box>
                       </Grid>

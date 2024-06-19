@@ -46,6 +46,7 @@ MKBox.propTypes = {
     "dark",
     "none",
     "colorBase",
+    "yellow",
   ]),
 };
 
