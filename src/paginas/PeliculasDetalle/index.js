@@ -68,7 +68,20 @@ function PeliculasDetalle() {
       try {
         await Promise.resolve()
           .then(() => setIsSubmitting(true))
-          .then(() => userListServices.addToList("664e59c1cc0d3547f8d65fb3",1,pelicula.id))
+          .then(() => {
+            let registro = {
+              userId: window.sessionStorage.getItem("userId"),
+              listId: 1,
+              film: {
+                id: pelicula.id,
+                title: pelicula.title,
+                poster_path: pelicula.poster_path,
+                overview: pelicula.overview,
+              }              
+            }            
+            
+            userListServices.addToList(registro)
+          } )
           .then((res) => {
             let btn = document.getElementById("btnAddFav");
             if(btn.classList.contains("favorito")) {
@@ -90,7 +103,20 @@ function PeliculasDetalle() {
       try {
         await Promise.resolve()
           .then(() => setIsSubmitting(true))
-          .then(() => userListServices.addToList("664e59c1cc0d3547f8d65fb3",2,pelicula.id))
+          .then(() => {
+            let registro = {
+              userId: window.sessionStorage.getItem("userId"),
+              listId: 2,
+              film: {
+                id: pelicula.id,
+                title: pelicula.title,
+                poster_path: pelicula.poster_path,
+                overview: pelicula.overview,
+              }              
+            }            
+            
+            userListServices.addToList(registro)
+          } )
           .then((res) => {
             console.log("res",res);
             let btn = document.getElementById("btnAddPending");
@@ -114,10 +140,21 @@ function PeliculasDetalle() {
       try {
         await Promise.resolve()
           .then(() => setIsSubmitting(true))
-          .then(() => userListServices.addToList("664e59c1cc0d3547f8d65fb3",3,pelicula.id))
+          .then(() => {
+            let registro = {
+              userId: window.sessionStorage.getItem("userId"),
+              listId: 3,
+              film: {
+                id: pelicula.id,
+                title: pelicula.title,
+                poster_path: pelicula.poster_path,
+                overview: pelicula.overview,
+              }              
+            }            
+            
+            userListServices.addToList(registro)
+          } )
           .then((res) => {
-            console.log("res",res);
-
             let btn = document.getElementById("btnAddViews");
             if(btn.classList.contains("visto")) {
                 btnAdd(btn,false,"visto");
@@ -168,9 +205,8 @@ function PeliculasDetalle() {
 
       const obtenerListasPorPelicula = async () => {
         try {
-          let res = await userListServices.getListByFilm("664e59c1cc0d3547f8d65fb3", 823464);
+          let res = await userListServices.getListByFilm(window.sessionStorage.getItem("userId"), filmId);
           console.log("resultado de listas",res);
-
           if (res.some(obj => obj.listId === 1)) {
               btnAdd(document.getElementById("btnAddFav"),true,"favorito");
           }

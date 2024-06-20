@@ -24,6 +24,8 @@ async function login(email, password) {
     let data = await fetch("http://localhost:4000/api/users/login", requestOptions);
     let prueba = await data.json();
     console.log("prueba",prueba);
+    window.sessionStorage.setItem("userId", prueba.data.user._id);
+    window.sessionStorage.setItem("token", prueba.data.token);
     return prueba;
   } catch (err) {
     // console.warn(err);
@@ -98,6 +100,8 @@ async function getSessionId() {
     console.warn("eerrrr",err);
   }
 }
+
+
 
 
  export { login, register, validateToken, getSessionId};
