@@ -5,6 +5,7 @@ import Estrenos from "paginas/Estrenos";
 import PeliculasDetalle from "paginas/PeliculasDetalle";
 import Generos from "paginas/Generos";
 import Listas from "paginas/Listas";
+import OlvideMiContraseñaBasic from "paginas/LandingPages/OlvideMiContraseña";
 
 const routes = [
   {
@@ -55,6 +56,14 @@ const routes = [
     route: "/paginas/autenticacion/registrar",
     type: "internal",
     component: <RegistrarBasic />,
+    hideOnRegistered: true,
+    hide: true
+  },
+  {
+    name: "Olvide mi Contraseña",
+    route: "/paginas/autenticacion/OlvideMiContraseña",
+    type: "internal",
+    component: <OlvideMiContraseñaBasic />,
     hideOnRegistered: true,
     hide: true
   },

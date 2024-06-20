@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 // react-router-dom components
 import { Link, Navigate } from "react-router-dom";
@@ -14,42 +14,21 @@ import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
+import * as authService from "services/auth";
 
-// Material Kit 2 React page layout routes
-//import routes from "routes";
-import CustomModal from "components/CustomModal/CustomModal";
 
 // Images
 import bgImage from "assets/images/bg-login.jpg";
-import { UserCtx } from "contexts/UserContext";
 
 function IngresarBasic() {
-  const { user, logIn } = useContext(UserCtx);
 
-  const [loginData, setLoginData] = useState({
-    email: "prueba",
-    password: "1",
-  });
+  const [email, setEmail] = useState("");
   
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [modalData, setModalData] = useState({
-    open: false,
-    title: "",
-    text: "",
-  });
 
   function handleValueChange(e) {
     let target = e.currentTarget;
-
-    setLoginData((ld) => ({ ...ld, [target.name]: target.value }));
-  }
-
-  function handleModalClose() {
-    setModalData({
-      open: false,
-      title: "",
-      text: "",
-    });
+    setEmail(target.value);
   }
 
   async function handleSubmit(e) {
@@ -57,13 +36,9 @@ function IngresarBasic() {
     try {
       await Promise.resolve()
         .then(() => setIsSubmitting(true))
-        .then(() => logIn(loginData));
+        .then(() => authService.sendEmailResetPassword(email));
     } catch (err) {
-      setModalData({
-        open: true,
-        title: "Error en inicio de sesion",
-        text: err,
-      });
+
     }
 
     setIsSubmitting(false);
@@ -71,8 +46,6 @@ function IngresarBasic() {
 
   return (
     <>
-      {user && !isSubmitting && <Navigate to="/" />}
-      <CustomModal open={modalData.open} modalData={modalData} handleClose={handleModalClose} />
       <MKBox
         position="absolute"
         top={0}
@@ -93,7 +66,7 @@ function IngresarBasic() {
       />
       <MKBox px={1} width="100%" height="100vh" mx="auto" position="relative" zIndex={2}>
         <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
-          <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
+          <Grid item xs={11} sm={9} md={6} lg={5} xl={4}>
             <Card aria-disabled={isSubmitting}>
               <MKBox
                 variant="gradient"
@@ -107,7 +80,7 @@ function IngresarBasic() {
                 textAlign="center"
               >
                 <MKTypography variant="h4" fontWeight="medium" mt={1} >
-                  Iniciar Sesión
+                  Olvidé mi contraseña
                 </MKTypography>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
@@ -119,20 +92,9 @@ function IngresarBasic() {
                   <MKBox mb={2}>
                     <MKInput
                       type="email"
-                      label="Email o teléfono"
+                      label="Email"
                       name="email"
-                      value={loginData.email}
-                      onChange={handleValueChange}
-                      disabled={isSubmitting}
-                      fullWidth
-                    />
-                  </MKBox>
-                  <MKBox mb={2}>
-                    <MKInput
-                      type="password"
-                      label="Contraseña"
-                      name="password"
-                      value={loginData.password}
+                      value={email}
                       onChange={handleValueChange}
                       disabled={isSubmitting}
                       fullWidth
@@ -145,45 +107,19 @@ function IngresarBasic() {
                       type="submit"
                       onClick={handleSubmit}
                       disabled={isSubmitting}
+                      // component={Link}
+                      // to="/paginas/inicio"
                       fullWidth
                       sx={{ color:"#f7c600!important" }}
                     >
-                      Iniciar Sesión
+                      Enviar
                     </MKButton>
                   </MKBox>
                   <MKBox textAlign="center">
                     <MKTypography variant="button" color="text">
-                      ¿Primera vez en FilmApp?{" "}
-                      <MKTypography
-                        component={Link}
-                        to="/paginas/autenticacion/registrar"
-                        variant="button"
-                        color="colorBase"
-                        fontWeight="medium"
-                        disabled={isSubmitting}
-                        textGradient
-                      >
-                        ¡Registrate!
-                      </MKTypography>
+                      * Se te enviará un email con un link para recuperar tu contraseña
                     </MKTypography>
                   </MKBox>
-                  <MKBox textAlign="center">
-                    <MKTypography variant="button" color="text">
-                      ¿Olvidaste tu contraseña? Hacé{" "} 
-                      <MKTypography
-                        component={Link}
-                        to="/paginas/autenticacion/olvideMiContraseña"
-                        variant="button"
-                        color="colorBase"
-                        fontWeight="medium"
-                        disabled={isSubmitting}
-                        textGradient
-                      >
-                        click aqui
-                      </MKTypography>
-                    </MKTypography>
-                  </MKBox>
-
                 </form>
               </MKBox>
             </Card>
