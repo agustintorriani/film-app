@@ -67,6 +67,7 @@
     ]
   },
   "devDependencies": {
+    "ajv": "^7.2.4",
     "eslint": "8.38.0",
     "eslint-plugin-import": "2.27.5",
     "eslint-plugin-jsx-a11y": "6.7.1",

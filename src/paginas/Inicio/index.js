@@ -164,6 +164,7 @@ function Inicio() {
               onKeyDown={handleSearch}
               InputProps={{
                 sx: {
+                  //fontWeight: "bold",
                   backgroundColor: "rgba(241, 194, 1, 0.85)", // Transparent darker green background
                   color: "#fff", // White text color
                   "& .MuiOutlinedInput-notchedOutline": {
@@ -173,6 +174,9 @@ function Inicio() {
                     borderColor: "fff", // Border color on hover
                   },
                 },
+              }}
+              InputLabelProps={{
+                className: 'bold-label' // Apply the bold-label class to the label
               }}
             />
           </Grid>
