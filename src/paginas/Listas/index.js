@@ -115,7 +115,7 @@ function Listas() {
         <Container sx={{paddingTop:"3em"}}>
            {
            isLoading == true ? (
-            <Grid item xs={12} lg={12} >
+            <Grid item xs={12} lg={12}>
                 <Box xs={4} display="flex" textAlign={"center"} justifyContent="center" p={4}>
                     <CircularProgress style={{ color:"#f7c600" }}/>
                 </Box>
@@ -126,40 +126,79 @@ function Listas() {
                 {/* {genero.name} ({genero.id}) Resultados: { peliculas.filter((pelicula) => pelicula.genre_ids.includes(genero.id)).length} */}
                 {genero.name} ({ peliculas.filter((pelicula) => pelicula.listId == genero.id).length})
               </Typography>
-              <HorizontalScroll className="scroll-container">
-                { peliculas.filter((pelicula) => pelicula.listId == genero.id)
-                  .map((pelicula) => (
-                    <Grid item className="one" film-id={pelicula.film.id} xs={12} lg={3} onClick={handleClickFilm}>
-                        <Box xs={4}
-                          sx={{
-                          backgroundImage: `url(${myConfig.themoviedb.pathImage + pelicula.film.posterPath})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: "center",
-                          width: '350px',
-                          height: '100%',
-                          }}
-                        >
-                        <Box className="image-overlay">
-                          <MKTypography className="title">
-                            {pelicula.film.title}
-                          </MKTypography>
-
-                          <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
-                              {pelicula.film.overview.length > 0 ? (
-                                <MKTypography  sx={{color:"#fff"}} className="overview">
-                                  {pelicula.film.overview}
-                                </MKTypography>
-                                ) : (
-                                <MKTypography sx={{color:"#fff"}} className="overview">
-                                  Sin descripción
-                                </MKTypography>
-                                )}
+                {peliculas.filter((pelicula) => pelicula.listId === genero.id).length > 3 ? (
+                  <HorizontalScroll className="scroll-container">
+                  { peliculas.filter((pelicula) => pelicula.listId == genero.id)
+                    .map((pelicula) => (
+                      <Grid item className="one" film-id={pelicula.film.id} xs={12} lg={3} onClick={handleClickFilm}>
+                          <Box xs={4}
+                            sx={{
+                            backgroundImage: `url(${myConfig.themoviedb.pathImage + pelicula.film.posterPath})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: "center",
+                            width: '350px',
+                            height: '100%',
+                            }}
+                          >
+                          <Box className="image-overlay">
+                            <MKTypography className="title">
+                              {pelicula.film.title}
+                            </MKTypography>
+  
+                            <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
+                                {pelicula.film.overview.length > 0 ? (
+                                  <MKTypography  sx={{color:"#fff"}} className="overview">
+                                    {pelicula.film.overview}
+                                  </MKTypography>
+                                  ) : (
+                                  <MKTypography sx={{color:"#fff"}} className="overview">
+                                    Sin descripción
+                                  </MKTypography>
+                                  )}
+                                  </Box>
                                 </Box>
-                              </Box>
-                        </Box>
-                      </Grid>
-                  ))}
-              </HorizontalScroll>
+                          </Box>
+                        </Grid>
+                    ))}
+                </HorizontalScroll>
+                ) : (
+                  <div id="container-vistos" class="scroll-container" style={{display: "inline-flex"}}>{
+                  peliculas.filter((pelicula) => pelicula.listId == genero.id)
+                    .map((pelicula) => (
+                        <Grid item className="one" film-id={pelicula.film.id} xs={12} lg={3} onClick={handleClickFilm}>
+                          <Box xs={4}
+                            sx={{
+                            backgroundImage: `url(${myConfig.themoviedb.pathImage + pelicula.film.posterPath})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: "center",
+                            width: '350px',
+                            height: '100%',
+                            }}
+                          >
+                          <Box className="image-overlay">
+                            <MKTypography className="title">
+                              {pelicula.film.title}
+                            </MKTypography>
+  
+                            <Box sx={{alignContent:"center", height:"80%", width:"90%", textAlign:"center"}}>
+                                {pelicula.film.overview.length > 0 ? (
+                                  <MKTypography  sx={{color:"#fff"}} className="overview">
+                                    {pelicula.film.overview}
+                                  </MKTypography>
+                                  ) : (
+                                  <MKTypography sx={{color:"#fff"}} className="overview">
+                                    Sin descripción
+                                  </MKTypography>
+                                  )}
+                                  </Box>
+                                </Box>
+                          </Box>
+                        </Grid>
+                      ))
+                    }</div>
+                )}
+
+              
             </Box>
           )))}
 

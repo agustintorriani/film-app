@@ -6,6 +6,7 @@ import PeliculasDetalle from "paginas/PeliculasDetalle";
 import Generos from "paginas/Generos";
 import Listas from "paginas/Listas";
 import OlvideMiContraseñaBasic from "paginas/LandingPages/OlvideMiContraseña";
+import ReestablecerPasswordBasic from "paginas/LandingPages/ReestablecerPassword";
 
 const routes = [
   {
@@ -56,6 +57,14 @@ const routes = [
     route: "/paginas/autenticacion/registrar",
     type: "internal",
     component: <RegistrarBasic />,
+    hideOnRegistered: true,
+    hide: true
+  },
+  {
+    name: "Reestablecer Password",
+    route: "/paginas/autenticacion/reestablecer-password",
+    type: "internal",
+    component: <ReestablecerPasswordBasic />,
     hideOnRegistered: true,
     hide: true
   },

@@ -1,7 +1,7 @@
 async function addToList(registro) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("x-acces-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU1YzY1NzcxYTZjNTQ5ZGRhZjEyNSIsImlhdCI6MTcxODUwODY0NSwiZXhwIjoxNzE4NTk1MDQ1fQ.OPxEWTCVaOcyxHt6RVF8G0-mq-dqBB0V5xbotv8FM3k");
+  myHeaders.append("x-acces-token", window.sessionStorage.getItem("token"));
   myHeaders.append("Accept","*/*");
   myHeaders.append("Connection","keep-alive");
   myHeaders.append("Accept-Encoding","gzip, deflate, br");
@@ -32,7 +32,7 @@ async function addToList(registro) {
 async function getListByFilm(userId, filmId) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("x-access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU3MDMxNmE1OTM3YzRjY2NjYzcyOCIsImlhdCI6MTcxODc3NTUyOSwiZXhwIjoxNzE4ODYxOTI5fQ.Bzn1x4zu1cuHj7GG317o4UQyx2ZiVv6AcF0IZ2DVsVw");
+  myHeaders.append("x-access-token", window.sessionStorage.getItem("token"));
   myHeaders.append("Accept","*/*");
   myHeaders.append("Connection","keep-alive");
   myHeaders.append("Accept-Encoding","gzip, deflate, br");
@@ -62,7 +62,7 @@ async function getListByFilm(userId, filmId) {
 async function getListByUser(userId) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("x-access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU3MDMxNmE1OTM3YzRjY2NjYzcyOCIsImlhdCI6MTcxODc3NTUyOSwiZXhwIjoxNzE4ODYxOTI5fQ.Bzn1x4zu1cuHj7GG317o4UQyx2ZiVv6AcF0IZ2DVsVw");
+  myHeaders.append("x-access-token", window.sessionStorage.getItem("token"));
   myHeaders.append("Accept","*/*");
   myHeaders.append("Connection","keep-alive");
   myHeaders.append("Accept-Encoding","gzip, deflate, br");

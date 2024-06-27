@@ -1,13 +1,8 @@
 import { useState } from "react";
 
-// react-router-dom components
-import { Link, Navigate } from "react-router-dom";
-
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-
-// @mui icons
 
 // Material Kit 2 React components
 import MKBox from "components/MKBox";
@@ -19,16 +14,28 @@ import * as authService from "services/auth";
 
 // Images
 import bgImage from "assets/images/bg-login.jpg";
+import toast, { Toaster } from 'react-hot-toast';
+import { Link, useLocation } from 'react-router-dom';
 
-function OlvideMiContraseñaBasic() {
 
-  const [email, setEmail] = useState("");
-  
+function ReestablecerPasswordBasic() {
+  var bcrypt = require('bcryptjs');
+
+  const [contraseña, setContraseña] = useState("");
+  const [repetirContraseña, setRepetirContraseña] = useState("");
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get('token'); // Retrieve the value of a specific query parameter
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  function handleValueChange(e) {
+  function handleContraseñaChange(e) {
     let target = e.currentTarget;
-    setEmail(target.value);
+    setContraseña(target.value);
+  }
+
+  function handleRepetirContraseñaChange(e) {
+    let target = e.currentTarget;
+    setRepetirContraseña(target.value);
   }
 
   async function handleSubmit(e) {
@@ -36,7 +43,15 @@ function OlvideMiContraseñaBasic() {
     try {
       await Promise.resolve()
         .then(() => setIsSubmitting(true))
-        .then(() => authService.sendEmailResetPassword(email));
+        .then(() => {
+            if(contraseña != repetirContraseña){
+              toast.error("Las contraseñas no coinciden");
+            } 
+            else {
+              var hashedPassword = bcrypt.hashSync(contraseña, 8);
+              authService.resetPassword(hashedPassword,token)
+            }
+        });
     } catch (err) {
 
     }
@@ -46,6 +61,7 @@ function OlvideMiContraseñaBasic() {
 
   return (
     <>
+      <div><Toaster position="bottom-center"/></div>
       <MKBox
         position="absolute"
         top={0}
@@ -80,7 +96,7 @@ function OlvideMiContraseñaBasic() {
                 textAlign="center"
               >
                 <MKTypography variant="h4" fontWeight="medium" mt={1} >
-                  Olvidé mi contraseña
+                  Reestablecer contraseña
                 </MKTypography>
               </MKBox>
               <MKBox pt={4} pb={3} px={3}>
@@ -91,11 +107,22 @@ function OlvideMiContraseñaBasic() {
                 >
                   <MKBox mb={2}>
                     <MKInput
-                      type="email"
-                      label="Email"
-                      name="email"
-                      value={email}
-                      onChange={handleValueChange}
+                      type="password"
+                      label="Contraseña"
+                      name="contraseña"
+                      value={contraseña}
+                      onChange={handleContraseñaChange}
+                      disabled={isSubmitting}
+                      fullWidth
+                    />
+                  </MKBox>
+                  <MKBox mb={2}>
+                    <MKInput
+                      type="password"
+                      label="Repetir Contraseña"
+                      name="repetirContraseña"
+                      value={repetirContraseña}
+                      onChange={handleRepetirContraseñaChange}
                       disabled={isSubmitting}
                       fullWidth
                     />
@@ -107,17 +134,25 @@ function OlvideMiContraseñaBasic() {
                       type="submit"
                       onClick={handleSubmit}
                       disabled={isSubmitting}
-                      // component={Link}
-                      // to="/paginas/inicio"
                       fullWidth
                       sx={{ color:"#f7c600!important" }}
                     >
-                      Enviar
+                      Guardar
                     </MKButton>
                   </MKBox>
-                  <MKBox textAlign="center">
+                  <MKBox>
                     <MKTypography variant="button" color="text">
-                      * Se te enviará un email con un link para recuperar tu contraseña
+                      <MKTypography
+                        component={Link}
+                        to="/paginas/autenticacion/Ingresar"
+                        variant="button"
+                        color="colorBase"
+                        fontWeight="medium"
+                        disabled={isSubmitting}
+                        textGradient
+                      >
+                        Volver al inicio
+                      </MKTypography>
                     </MKTypography>
                   </MKBox>
                 </form>
@@ -133,4 +168,4 @@ function OlvideMiContraseñaBasic() {
   );
 }
 
-export default OlvideMiContraseñaBasic;
+export default ReestablecerPasswordBasic;

@@ -1,17 +1,39 @@
 import { myConfig } from "config";
+// const NodeRSA = require('node-rsa');
+// const key = new NodeRSA({ b: 512 });
+// const publicKey =  myConfig.publicKey;
+// const privateKey = myConfig.privateKey;
+import JSEncrypt from 'jsencrypt';
+
 
 async function login(email, password) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("x-acces-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU1YzY1NzcxYTZjNTQ5ZGRhZjEyNSIsImlhdCI6MTcxODUwODY0NSwiZXhwIjoxNzE4NTk1MDQ1fQ.OPxEWTCVaOcyxHt6RVF8G0-mq-dqBB0V5xbotv8FM3k");
+  myHeaders.append("x-access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU1YzY1NzcxYTZjNTQ5ZGRhZjEyNSIsImlhdCI6MTcxODUwODY0NSwiZXhwIjoxNzE4NTk1MDQ1fQ.OPxEWTCVaOcyxHt6RVF8G0-mq-dqBB0V5xbotv8FM3k");
   myHeaders.append("Accept","*/*");
   myHeaders.append("Connection","keep-alive");
   myHeaders.append("Accept-Encoding","gzip, deflate, br");
 
-  var raw = JSON.stringify({
-    email: email,
-    password: password,
-  });
+    // const publicKey = myConfig.publicKey;
+
+    // const publicKey = `-----BEGIN PUBLIC KEY-----
+    // MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvl+G9CHJ/gRQWSFG1aI8
+    // Q5Ru3JF9u5lVdPPG8EFSq5ar9RBLG1BZgHDLUymqPshKZ3IqVVf9aBO2zS5Vj0Fu
+    // WWt97bRVW2VuT1u9KgAxcd0UwEdSokzmScsAn4A7szNOKOeg5sG08bqRR2VfbwWu
+    // Snw4yU6+fN2bV5EjxE5c2TZR8QzrP9P69r0yH9F0U8GppAcz/J8TiOiLTCTgVmGb
+    // lftDi94GVfrYYAub/BtXjic3JJXX2pyVeXG8nPlLdh52e6TrnPz9Ft2fDqDeeM5o
+    // rLb5zNCQPE0rfzY7vg8xj2cP+DCj2rdHp7kCgys2XyxD1ryRk7yZfZNHQ0R2eDAK
+    // WwIDAQAB
+    // -----END PUBLIC KEY-----`;
+    // const enc = new JSEncrypt();
+    // enc.setPublicKey(publicKey);
+
+    var raw = JSON.stringify({
+      email: email,
+      // password: enc.encrypt(password),
+      password: password,
+    });
+
 
   var requestOptions = {
     method: "POST",
@@ -21,9 +43,8 @@ async function login(email, password) {
   };
 
   try {
-    let data = await fetch("http://localhost:4000/api/users/login", requestOptions);
+    let data = await fetch("http://localhost:4000/api/usuarios/login", requestOptions);
     let prueba = await data.json();
-    console.log("prueba",prueba);
     window.sessionStorage.setItem("userId", prueba.data.user._id);
     window.sessionStorage.setItem("token", prueba.data.token);
     return prueba;
@@ -101,10 +122,42 @@ async function getSessionId() {
   }
 }
 
+async function resetPassword(password,token) {
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("x-access-token", token);
+  myHeaders.append("Accept","*/*");
+  myHeaders.append("Connection","keep-alive");
+  myHeaders.append("Accept-Encoding","gzip, deflate, br");
+
+  
+  var raw = JSON.stringify({
+    userId: window.sessionStorage.getItem("userId"),
+    password: password,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  try {
+    let data = await fetch("http://localhost:4000/api/usuarios/reset-password", requestOptions);
+    let prueba = await data.json();
+    return prueba;
+  } catch (err) {
+    // console.warn(err);
+    return null;
+  }
+}
+
 async function sendEmailResetPassword(email) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("x-acces-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU1YzY1NzcxYTZjNTQ5ZGRhZjEyNSIsImlhdCI6MTcxODUwODY0NSwiZXhwIjoxNzE4NTk1MDQ1fQ.OPxEWTCVaOcyxHt6RVF8G0-mq-dqBB0V5xbotv8FM3k");
+  myHeaders.append("x-access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU1YzY1NzcxYTZjNTQ5ZGRhZjEyNSIsImlhdCI6MTcxODUwODY0NSwiZXhwIjoxNzE4NTk1MDQ1fQ.OPxEWTCVaOcyxHt6RVF8G0-mq-dqBB0V5xbotv8FM3k");
   myHeaders.append("Accept","*/*");
   myHeaders.append("Connection","keep-alive");
   myHeaders.append("Accept-Encoding","gzip, deflate, br");
@@ -122,7 +175,7 @@ async function sendEmailResetPassword(email) {
   };
 
   try {
-    let data = await fetch("http://localhost:4000/api/users/send-reset-password-email", requestOptions);
+    let data = await fetch("http://localhost:4000/api/usuarios/send-reset-password-email", requestOptions);
     let prueba = await data.json();
     return prueba;
   } catch (err) {
@@ -131,4 +184,4 @@ async function sendEmailResetPassword(email) {
   }
 }
 
- export { login, register, validateToken, getSessionId, sendEmailResetPassword};
+ export { login, register, validateToken, getSessionId, sendEmailResetPassword,resetPassword};
