@@ -42,6 +42,16 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
 
   const openMobileNavbar = () => setMobileNavbar(!mobileNavbar);
 
+
+  function handleCerrarSesion(e) {
+    window.sessionStorage.removeItem("userId");
+    window.sessionStorage.removeItem("token");
+    window.sessionStorage.removeItem("sessionId");
+
+    window.location.href = "/";
+
+  }
+
   useEffect(() => {
     // A function that sets the display state for the DefaultNavbarMobile.
     function displayMobileNavbar() {
@@ -486,8 +496,9 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
             {action &&
               (action.type === "internal" ? (
                 <MKButton
-                  component={Link}
-                  to={action.route}
+                  // component={Link}
+                  // to={action.route}
+                  onClick={handleCerrarSesion}
                   variant={
                     action.color === "white" || action.color === "default"
                       ? "contained"

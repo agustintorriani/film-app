@@ -205,20 +205,20 @@ function PeliculasDetalle() {
 
       const obtenerListasPorPelicula = async () => {
         try {
-          let res = await userListServices.getListByFilm(window.sessionStorage.getItem("userId"), filmId);
-          console.log("resultado de listas",res);
-          if (res.some(obj => obj.listId === 1)) {
-              btnAdd(document.getElementById("btnAddFav"),true,"favorito");
-          }
-
-          if (res.some(obj => obj.listId === 2)) {
-            btnAdd(document.getElementById("btnAddPending"),true,"pendiente");
-          }
-
-          if (res.some(obj => obj.listId === 3)) {
-            btnAdd(document.getElementById("btnAddViews"),true,"visto");
-          }
-
+          await userListServices.getListByFilm(window.sessionStorage.getItem("userId"), filmId).then((res) => {
+            console.log("resultado de listas",res);
+            if (res.some(obj => obj.listId === 1)) {
+                btnAdd(document.getElementById("btnAddFav"),true,"favorito");
+            }
+  
+            if (res.some(obj => obj.listId === 2)) {
+              btnAdd(document.getElementById("btnAddPending"),true,"pendiente");
+            }
+  
+            if (res.some(obj => obj.listId === 3)) {
+              btnAdd(document.getElementById("btnAddViews"),true,"visto");
+            }
+          });
         } catch (error) {
           console.log("ocurrio un error",error);
         }
@@ -248,7 +248,7 @@ function PeliculasDetalle() {
           <Grid container mt={15}>
                     {pelicula ? (
                         <>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={12} md={7}>
                                 <Box display="flex" justifyContent="center">
                                     <img
                                         src={myConfig.themoviedb.pathImage + pelicula.poster_path}
@@ -270,7 +270,7 @@ function PeliculasDetalle() {
                                   </Button>
                                 </Box>
                             </Grid>
-                            <Grid item xs={12} md={6}>
+                            <Grid item xs={12} md={5}>
                                 <Box color={"#f7c600"}>
                                     <Typography variant="h2" color={"#f7c600"} gutterBottom>
                                         {pelicula.title}

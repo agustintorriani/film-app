@@ -14,21 +14,7 @@ async function login(email, password) {
   myHeaders.append("Connection","keep-alive");
   myHeaders.append("Accept-Encoding","gzip, deflate, br");
 
-    // const publicKey = myConfig.publicKey;
-
-    // const publicKey = `-----BEGIN PUBLIC KEY-----
-    // MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvl+G9CHJ/gRQWSFG1aI8
-    // Q5Ru3JF9u5lVdPPG8EFSq5ar9RBLG1BZgHDLUymqPshKZ3IqVVf9aBO2zS5Vj0Fu
-    // WWt97bRVW2VuT1u9KgAxcd0UwEdSokzmScsAn4A7szNOKOeg5sG08bqRR2VfbwWu
-    // Snw4yU6+fN2bV5EjxE5c2TZR8QzrP9P69r0yH9F0U8GppAcz/J8TiOiLTCTgVmGb
-    // lftDi94GVfrYYAub/BtXjic3JJXX2pyVeXG8nPlLdh52e6TrnPz9Ft2fDqDeeM5o
-    // rLb5zNCQPE0rfzY7vg8xj2cP+DCj2rdHp7kCgys2XyxD1ryRk7yZfZNHQ0R2eDAK
-    // WwIDAQAB
-    // -----END PUBLIC KEY-----`;
-    // const enc = new JSEncrypt();
-    // enc.setPublicKey(publicKey);
-
-    const secretKey = 'torritoKey';
+    const secretKey = myConfig.secretKey;
     var raw = JSON.stringify({
       email: email,
       password: CryptoJS.AES.encrypt(password, secretKey).toString(),
@@ -59,10 +45,11 @@ async function register(registrationData) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-
+  const secretKey = myConfig.secretKey;
   var raw = JSON.stringify({
     email: registrationData.email,
-    password: registrationData.password,
+    password: CryptoJS.AES.encrypt(registrationData.password, secretKey).toString(),
+    // password: registrationData.password,
     usuario: registrationData.usuario,
   });
 
@@ -139,11 +126,12 @@ async function resetPassword(password,token) {
   myHeaders.append("Connection","keep-alive");
   myHeaders.append("Accept-Encoding","gzip, deflate, br");
 
-  
+  const secretKey = myConfig.secretKey;
+
   var raw = JSON.stringify({
     userId: window.sessionStorage.getItem("userId"),
-    password: password,
-  });
+    password: CryptoJS.AES.encrypt(password, secretKey).toString(),
+});
 
   var requestOptions = {
     method: "POST",
