@@ -19,6 +19,7 @@ import { useContext, useState } from "react";
 import { UserCtx } from "contexts/UserContext";
 import CustomModal from "components/CustomModal/CustomModal";
 import toast, { Toaster } from 'react-hot-toast';
+import * as authService from "services/auth";
 
 function RegistrarBasic() {
   const navigate = useNavigate();
@@ -30,8 +31,6 @@ function RegistrarBasic() {
   });
 
   const [registrationData, setRegistrationData] = useState({
-    nombre: "",
-    apellido: "",
     email: "",
     usuario: "",
     password: "",
@@ -83,18 +82,50 @@ function RegistrarBasic() {
       toast('Faltan campos obligatorios');
     } else {
         setIsSubmitting(true);
-        toast.promise(
-          new Promise((resolve) => setTimeout(resolve, 2000)),
-          {
-            loading: 'Registrando...',
-            success: 'Registro exitoso',
-            error: 'Error en el registro',
-          }
-        ).then(() => {
-          setTimeout(() => {
-            navigate("/paginas/inicio");
-          }, 2000);
-        });
+        // toast.promise(
+        //   new Promise((resolve) => setTimeout(resolve, 2000)),
+        //   {
+        //     loading: 'Registrando...',
+        //     success: 'Registro exitoso',
+        //     error: 'Error en el registro',
+        //   }
+        // ).then(() => {
+        //   setTimeout(() => {
+        //     navigate("/paginas/inicio");
+        //   }, 2000);
+        // });
+
+        e.preventDefault();
+        try {
+          await Promise.resolve()
+            .then(() => setIsSubmitting(true))
+            .then(() => {
+                authService.register(registrationData).then((response) => {
+                    console.log("response", response);
+                    if (response.success) {
+                      toast.success(response.message);
+                        setTimeout(() => {
+                          navigate("/paginas/inicio");
+                        }, 2000);
+                    } else {
+                      toast.error(response.message);
+                    }
+                });
+                
+            });
+            // setTimeout(() => {
+            //       navigate("/paginas/inicio");
+            //     }, 2000)
+        } catch (err) {
+          setModalData({
+            open: true,
+            title: "Error en inicio de sesion",
+            text: err,
+          });
+        }
+  
+      setIsSubmitting(false);
+
     }
   }
 

@@ -498,6 +498,7 @@ function DefaultNavbar({ brand, routes, transparent, light, action, sticky, rela
                 >
                   {action.label}
                 </MKButton>
+                //CERRARSESIONbtn
               ) : (
                 <MKButton
                   component="a"

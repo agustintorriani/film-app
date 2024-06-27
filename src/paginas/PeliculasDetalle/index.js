@@ -240,7 +240,7 @@ function PeliculasDetalle() {
           backgroundColor: "#141414",
           backgroundSize: "cover",
           backgroundPosition: "top",
-          display: "grid",
+          display: "flex",
           placeItems: "top",
         }}
       >
@@ -253,10 +253,10 @@ function PeliculasDetalle() {
                                     <img
                                         src={myConfig.themoviedb.pathImage + pelicula.poster_path}
                                         alt={pelicula.title}
-                                        style={{ width: "auto", height: "70vh" }}
+                                        style={{ width: "auto", height: "60vh" }}
                                     />
                                 </Box>
-                                <Box mt={2} display="flex"  justifyContent="center">
+                                <Box mt={2} display="flex" justifyContent="center">
                                   <Button id="btnAddFav" sx={{marginRight:"10px"}} variant="contained" color="colorBase" onClick={handleAddToFavorites}>
                                     <Favorite /> Agregar a Favoritos
                                   </Button>

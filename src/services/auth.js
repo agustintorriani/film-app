@@ -4,12 +4,12 @@ import { myConfig } from "config";
 // const publicKey =  myConfig.publicKey;
 // const privateKey = myConfig.privateKey;
 import JSEncrypt from 'jsencrypt';
-
+import CryptoJS from 'crypto-js';
 
 async function login(email, password) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("x-access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU1YzY1NzcxYTZjNTQ5ZGRhZjEyNSIsImlhdCI6MTcxODUwODY0NSwiZXhwIjoxNzE4NTk1MDQ1fQ.OPxEWTCVaOcyxHt6RVF8G0-mq-dqBB0V5xbotv8FM3k");
+  myHeaders.append("x-acces-token", window.sessionStorage.getItem("token"));
   myHeaders.append("Accept","*/*");
   myHeaders.append("Connection","keep-alive");
   myHeaders.append("Accept-Encoding","gzip, deflate, br");
@@ -28,10 +28,11 @@ async function login(email, password) {
     // const enc = new JSEncrypt();
     // enc.setPublicKey(publicKey);
 
+    const secretKey = 'torritoKey';
     var raw = JSON.stringify({
       email: email,
-      // password: enc.encrypt(password),
-      password: password,
+      password: CryptoJS.AES.encrypt(password, secretKey).toString(),
+      //password: password,
     });
 
 
@@ -54,15 +55,15 @@ async function login(email, password) {
   }
 }
 
-async function register(name, lastname, email, password) {
+async function register(registrationData) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
+
   var raw = JSON.stringify({
-    name,
-    lastname,
-    email,
-    password,
+    email: registrationData.email,
+    password: registrationData.password,
+    usuario: registrationData.usuario,
   });
 
   var requestOptions = {
@@ -74,8 +75,15 @@ async function register(name, lastname, email, password) {
 
   try {
     let data = await fetch("http://localhost:4000/api/usuarios/register", requestOptions);
-    return await data.json();
+    let prueba = await data.json();
+
+    if(prueba.success){
+      window.sessionStorage.setItem("userId", prueba.createdUser.user._id);
+      window.sessionStorage.setItem("token", prueba.createdUser.token);
+    }
+    return prueba;
   } catch (err) {
+    console.log("errorcito");
     console.warn(err);
     return null;
   }
@@ -157,7 +165,7 @@ async function resetPassword(password,token) {
 async function sendEmailResetPassword(email) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("x-access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmU1YzY1NzcxYTZjNTQ5ZGRhZjEyNSIsImlhdCI6MTcxODUwODY0NSwiZXhwIjoxNzE4NTk1MDQ1fQ.OPxEWTCVaOcyxHt6RVF8G0-mq-dqBB0V5xbotv8FM3k");
+  myHeaders.append("x-acces-token", window.sessionStorage.getItem("token"));
   myHeaders.append("Accept","*/*");
   myHeaders.append("Connection","keep-alive");
   myHeaders.append("Accept-Encoding","gzip, deflate, br");
