@@ -15,16 +15,18 @@ import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 import * as authService from "services/auth";
-
+import { useNavigate } from 'react-router-dom';
 
 // Images
 import bgImage from "assets/images/bg-login.jpg";
+import toast, { Toaster } from 'react-hot-toast';
 
 function OlvideMiContraseñaBasic() {
 
   const [email, setEmail] = useState("");
   
   const [isSubmitting, setIsSubmitting] = useState(false);
+  let navigate = useNavigate();
 
   function handleValueChange(e) {
     let target = e.currentTarget;
@@ -33,19 +35,34 @@ function OlvideMiContraseñaBasic() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const toastId = toast.loading('Enviando email de recupero de contraseña...');
+
     try {
       await Promise.resolve()
         .then(() => setIsSubmitting(true))
-        .then(() => authService.sendEmailResetPassword(email));
+        .then(() => authService.sendEmailResetPassword(email).then((response) => {
+          toast.dismiss(toastId);
+          
+          if(response.success){
+            toast.success(response.message);
+            setTimeout(() => {
+              navigate("/", { replace: true })
+            }, 2000);
+          } else {
+            toast.error(response.message);
+            setIsSubmitting(false);
+            }
+        })
+      )
     } catch (err) {
-
+      setIsSubmitting(false);
     }
 
-    setIsSubmitting(false);
   }
 
   return (
     <>
+      <div><Toaster position="bottom-center"/></div>
       <MKBox
         position="absolute"
         top={0}
@@ -118,6 +135,21 @@ function OlvideMiContraseñaBasic() {
                   <MKBox textAlign="center">
                     <MKTypography variant="button" color="text">
                       * Se te enviará un email con un link para recuperar tu contraseña
+                    </MKTypography>
+                  </MKBox>
+                  <MKBox mt={1} mb={1} textAlign="center">
+                    <MKTypography variant="button" color="text">
+                      <MKTypography
+                        component={Link}
+                        to="/"
+                        variant="button"
+                        color="colorBase"
+                        fontWeight="medium"
+                        disabled={isSubmitting}
+                        textGradient
+                      >
+                        Volver
+                      </MKTypography>
                     </MKTypography>
                   </MKBox>
                 </form>

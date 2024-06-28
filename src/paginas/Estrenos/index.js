@@ -84,7 +84,7 @@ function Estrenos() {
         }}
       >
         <Container>
-          <Grid container mt={10}>
+          <Grid container mt={12} mb={2}>
             <Typography variant="h4" color={"#f7c600"} fontSize={"30px"}>
               Estrenos
             </Typography>

@@ -38,11 +38,12 @@ export const UserContext = ({ children }) => {
   }
 
   async function logIn({ email, password }) {
+    
     authServices
       .login(email, password)
       .then(async (res) => {
-        console.log("res",res);
         if (res.status === 200 && res.data.token) {
+          toast.success("Login exitoso")
           let data = await jwtDecode(res.data.token);
           navigate("/paginas/inicio", { replace: true });  
           return { ...data, token: res.data.token };

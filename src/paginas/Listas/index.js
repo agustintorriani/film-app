@@ -50,38 +50,16 @@ function Listas() {
     const obtenerListas = async () => {
       try {
         let res = await userListServices.getListByUser(window.sessionStorage.getItem("userId"));
-        console.log("listas",res.lists);
         setPeliculas(res.lists);
-        console.log("pelisssss", peliculas);
           setTimeout(() => {
             setIsLoading(false);
           }, 500);
       } catch (error) {
-        console.log("ocurrio un error",error);
       }
     };
 
     obtenerListas();
   }, []);
-
-
-
-  // useEffect(() => {
-  //   const fetchPorGenero = async () => {
-  //       // let urlPeliculasPorGenero = myConfig.themoviedb.url + "discover/movie?include_adult=false&include_video=false&language=es-ES&page="+i+"&sort_by=popularity.desc&with_genres="+generosString;
-  //       // console.log("urlgen",urlPeliculasPorGenero);
-  //       try {
-  //         // const response = await fetch(urlPeliculasPorGenero, options);
-  //         // const data = await response.json();
-  //         // setPeliculas(dataPelis.results);
-  //         // console.log("datapelis",peliculas);
-  //       } catch (error) {
-  //         console.error("Error fetching data:", error);
-  //       }
-  //   };
-  //   fetchPorGenero();
-  // }, []);
-
 
   let navbarAction = {
     type: "internal",

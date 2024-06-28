@@ -25,7 +25,9 @@ function ReestablecerPasswordBasic() {
   const [repetirContraseña, setRepetirContraseña] = useState("");
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get('token'); // Retrieve the value of a specific query parameter
+  const token = queryParams.get('token'); 
+  const userId = queryParams.get('userId'); 
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   function handleContraseñaChange(e) {
@@ -39,24 +41,37 @@ function ReestablecerPasswordBasic() {
   }
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      await Promise.resolve()
-        .then(() => setIsSubmitting(true))
-        .then(() => {
-            if(contraseña != repetirContraseña){
-              toast.error("Las contraseñas no coinciden");
-            } 
-            else {
-              var hashedPassword = bcrypt.hashSync(contraseña, 8);
-              authService.resetPassword(hashedPassword,token)
-            }
-        });
-    } catch (err) {
-
+    if (contraseña == "" || repetirContraseña == "") {
+      toast.error("Debe completar las contraseñas");
+      e.preventDefault();
+    } else if (contraseña != repetirContraseña) {
+      toast.error('Las contraseñas no coinciden');
+    } else {
+      try {
+        const toastId = toast.loading('Actualizando contraseña...');
+        await Promise.resolve()
+          .then(() => setIsSubmitting(true))
+          .then(() => {
+            setTimeout(() => {
+              authService.resetPassword(contraseña,token,userId).then((response) => {
+                toast.dismiss(toastId);
+                if (response.status == 200) {
+                  toast.success(response.message);
+                  setIsSubmitting(false);
+                  setTimeout(() => {
+                    window.location.href = '/paginas/autenticacion/Ingresar';
+                  }, 1000);
+                } else {
+                  toast.error(response.message);
+                  setIsSubmitting(false);
+                }    
+              });
+            }, 1000);
+          })
+      } catch (err) {
+        setIsSubmitting(false);
+      }
     }
-
-    setIsSubmitting(false);
   }
 
   return (

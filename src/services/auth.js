@@ -117,7 +117,7 @@ async function getSessionId() {
   }
 }
 
-async function resetPassword(password,token) {
+async function resetPassword(password,token,userId) {
 
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -129,9 +129,10 @@ async function resetPassword(password,token) {
   const secretKey = myConfig.secretKey;
 
   var raw = JSON.stringify({
-    userId: window.sessionStorage.getItem("userId"),
+    userId: userId,
     password: CryptoJS.AES.encrypt(password, secretKey).toString(),
 });
+
 
   var requestOptions = {
     method: "POST",

@@ -126,7 +126,7 @@ function Inicio() {
   }
 
   const handleSearch = (event) => {
-    if (event.key === "Enter") {
+    if(document.getElementById("searcher").value.toString().length > 3){
       setSearchValue(document.getElementById("searcher").value.toString());
     }
   };

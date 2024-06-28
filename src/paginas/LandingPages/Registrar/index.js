@@ -51,81 +51,41 @@ function RegistrarBasic() {
     setRegistrationData((rd) => ({ ...rd, [target.name]: target.value }));
   }
 
-  // async function handleSubmit() {
-  //   if (registrationData.password !== registrationData.repeatPassword) {
-  //     return setModalData({
-  //       open: true,
-  //       title: "Error al intentar registrase",
-  //       text: "Las contraseñas ingresadas no coinciden",
-  //     });
-  //   }
-
-  //   try {
-  //     await Promise.resolve()
-  //       .then(() => setIsSubmitting(true))
-  //       .then(() => register(registrationData));
-  //   } catch (err) {
-  //     setModalData({
-  //       open: true,
-  //       title: "Error en registro",
-  //       text: err.message || err,
-  //     });
-  //   }
-  //   setIsSubmitting(false);
-  // }
-
   async function handleSubmit(e) {
     if (registrationData.password != registrationData.repeatPassword) {
       toast.error("Las contraseñas no coinciden");
       e.preventDefault();
     } else if (registrationData.email == "" || registrationData.password == "" || registrationData.repeatPassword == "" || registrationData.usuario == "") {
-      toast('Faltan campos obligatorios');
+      toast.error('Faltan campos obligatorios');
     } else {
-        setIsSubmitting(true);
-        // toast.promise(
-        //   new Promise((resolve) => setTimeout(resolve, 2000)),
-        //   {
-        //     loading: 'Registrando...',
-        //     success: 'Registro exitoso',
-        //     error: 'Error en el registro',
-        //   }
-        // ).then(() => {
-        //   setTimeout(() => {
-        //     navigate("/paginas/inicio");
-        //   }, 2000);
-        // });
-
         e.preventDefault();
+        const toastId = toast.loading('Registrando usuario...');
+
         try {
           await Promise.resolve()
             .then(() => setIsSubmitting(true))
             .then(() => {
                 authService.register(registrationData).then((response) => {
-                    console.log("response", response);
-                    if (response.success) {
-                      toast.success(response.message);
-                        setTimeout(() => {
-                          navigate("/paginas/inicio");
-                        }, 2000);
-                    } else {
-                      toast.error(response.message);
-                    }
+                    setTimeout(() => {
+                      toast.dismiss(toastId);
+                      if (response.success) {
+                        toast.success(response.message);
+                          setTimeout(() => {
+                            navigate("/paginas/inicio");
+                          }, 2000);
+                      } else {
+                        toast.error(response.message);
+                        setIsSubmitting(false);
+                        }
+                    }, 2000);
+                    
                 });
                 
             });
-            // setTimeout(() => {
-            //       navigate("/paginas/inicio");
-            //     }, 2000)
         } catch (err) {
-          setModalData({
-            open: true,
-            title: "Error en inicio de sesion",
-            text: err,
-          });
+          toast.error('Ups, ocurrió un error en el registro');
+          setIsSubmitting(false);
         }
-  
-      setIsSubmitting(false);
-
     }
   }
 
@@ -156,7 +116,7 @@ function RegistrarBasic() {
         <Grid container spacing={1} justifyContent="center" alignItems="center" height="100%">
           <Grid item xs={11} sm={9} md={5} lg={4} xl={3}>
             <Card>
-              <MKBox
+            <MKBox
                 variant="gradient"
                 bgColor="colorBase"
                 borderRadius="lg"
@@ -167,7 +127,7 @@ function RegistrarBasic() {
                 mb={1}
                 textAlign="center"
               >
-                <MKTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                <MKTypography variant="h4" fontWeight="medium" mt={1} >
                   Registrate
                 </MKTypography>
               </MKBox>
@@ -219,12 +179,13 @@ function RegistrarBasic() {
                   <MKBox mt={4} mb={1}>
                     <MKButton
                       type="submit"
-                      variant="gradient"
+                      variant="contained"
                       color="colorBase"
                       coloredShadow="colorBase"
                       fullWidth
                       onClick={handleSubmit}
                       disabled={isSubmitting}
+                      sx={{ color:"#f7c600!important" }}
                     >
                       Registrarme
                     </MKButton>

@@ -22,13 +22,14 @@ import CustomModal from "components/CustomModal/CustomModal";
 // Images
 import bgImage from "assets/images/bg-login.jpg";
 import { UserCtx } from "contexts/UserContext";
+import toast, { Toaster } from 'react-hot-toast';
 
 function IngresarBasic() {
   const { user, logIn } = useContext(UserCtx);
 
   const [loginData, setLoginData] = useState({
-    email: "prueba",
-    password: "1",
+    email: "",
+    password: "",
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,35 +45,41 @@ function IngresarBasic() {
     setLoginData((ld) => ({ ...ld, [target.name]: target.value }));
   }
 
-  function handleModalClose() {
-    setModalData({
-      open: false,
-      title: "",
-      text: "",
-    });
-  }
+  // function handleModalClose() {
+  //   setModalData({
+  //     open: false,
+  //     title: "",
+  //     text: "",
+  //   });
+  // }
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      await Promise.resolve()
-        .then(() => setIsSubmitting(true))
-        .then(() => logIn(loginData));
-    } catch (err) {
-      setModalData({
-        open: true,
-        title: "Error en inicio de sesion",
-        text: err,
-      });
-    }
 
-    setIsSubmitting(false);
+    const toastId = toast.loading('Iniciando Sesión...');
+    if (loginData.email == "" || loginData.password == "") {
+      e.preventDefault();
+      toast.error('Debe email y contraseña para iniciar sesión.');
+    } else {
+      setIsSubmitting(true);
+      try {
+        setTimeout(async() => {
+          await Promise.resolve()
+          .then(() => setIsSubmitting(true))
+          .then(() => logIn(loginData))
+          .then(() => toast.dismiss(toastId))
+          .then(() => setIsSubmitting(false))
+        }, 1000);
+      } catch (err) {
+        setIsSubmitting(false);
+      }
+    }
   }
 
   return (
     <>
+      <div><Toaster position="bottom-center"/></div>
       {user && !isSubmitting && <Navigate to="/" />}
-      <CustomModal open={modalData.open} modalData={modalData} handleClose={handleModalClose} />
+      {/* <CustomModal open={modalData.open} modalData={modalData} handleClose={handleModalClose} /> */}
       <MKBox
         position="absolute"
         top={0}
@@ -119,7 +126,7 @@ function IngresarBasic() {
                   <MKBox mb={2}>
                     <MKInput
                       type="email"
-                      label="Email o teléfono"
+                      label="Email"
                       name="email"
                       value={loginData.email}
                       onChange={handleValueChange}
@@ -190,9 +197,6 @@ function IngresarBasic() {
           </Grid>
         </Grid>
       </MKBox>
-      {/* <MKBox width="100%" position="absolute" zIndex={2} bottom="1.625rem">
-        <SimpleFooter light />
-      </MKBox> */}
     </>
   );
 }

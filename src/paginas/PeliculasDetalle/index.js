@@ -256,7 +256,7 @@ function PeliculasDetalle() {
                                         style={{ width: "auto", height: "60vh" }}
                                     />
                                 </Box>
-                                <Box mt={2} display="flex" justifyContent="center">
+                                <Box  mt={2} display="flex" justifyContent="center">
                                   <Button id="btnAddFav" sx={{marginRight:"10px"}} variant="contained" color="colorBase" onClick={handleAddToFavorites}>
                                     <Favorite /> Agregar a Favoritos
                                   </Button>
