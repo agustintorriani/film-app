@@ -70,11 +70,7 @@ function Generos() {
 
   useEffect(() => {
     const fetchPorGenero = async () => {
-        // let urlPeliculasPorGenero = myConfig.themoviedb.url + "discover/movie?include_adult=false&include_video=false&language=es-ES&page="+i+"&sort_by=popularity.desc&with_genres="+generosString;
-        // console.log("urlgen",urlPeliculasPorGenero);
         try {
-          // const response = await fetch(urlPeliculasPorGenero, options);
-          // const data = await response.json();
           setPeliculas(dataPelis.results);
           setTimeout(() => {
             setIsLoading(false);

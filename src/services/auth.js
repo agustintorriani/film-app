@@ -70,7 +70,6 @@ async function register(registrationData) {
     }
     return prueba;
   } catch (err) {
-    console.log("errorcito");
     console.warn(err);
     return null;
   }

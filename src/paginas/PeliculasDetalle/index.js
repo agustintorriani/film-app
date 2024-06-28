@@ -118,7 +118,6 @@ function PeliculasDetalle() {
             userListServices.addToList(registro)
           } )
           .then((res) => {
-            console.log("res",res);
             let btn = document.getElementById("btnAddPending");
               if(btn.classList.contains("pendiente")) {
                   btnAdd(btn,false,"pendiente");
@@ -206,7 +205,6 @@ function PeliculasDetalle() {
       const obtenerListasPorPelicula = async () => {
         try {
           await userListServices.getListByFilm(window.sessionStorage.getItem("userId"), filmId).then((res) => {
-            console.log("resultado de listas",res);
             if (res.some(obj => obj.listId === 1)) {
                 btnAdd(document.getElementById("btnAddFav"),true,"favorito");
             }
